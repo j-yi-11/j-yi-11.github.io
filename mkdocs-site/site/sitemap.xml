@@ -1,15 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-         <loc>https://j-yi-11.github.io/mymkdocs/</loc>
+         <loc>https://j-yi-11.github.io/mymkdocs/index.html</loc>
          <lastmod>2024-09-19</lastmod>
     </url>
     <url>
-         <loc>https://j-yi-11.github.io/mymkdocs/blog/Webs/</loc>
+         <loc>https://j-yi-11.github.io/mymkdocs/tag.html</loc>
          <lastmod>2024-09-19</lastmod>
     </url>
     <url>
-         <loc>https://j-yi-11.github.io/mymkdocs/develop/markdown/</loc>
+         <loc>https://j-yi-11.github.io/mymkdocs/blog/index.html</loc>
+         <lastmod>2024-09-19</lastmod>
+    </url>
+    <url>
+         <loc>https://j-yi-11.github.io/mymkdocs/blog/2024/09/19/%E5%AE%9E%E7%94%A8%E7%BD%91%E7%AB%99.html</loc>
+         <lastmod>2024-09-19</lastmod>
+    </url>
+    <url>
+         <loc>https://j-yi-11.github.io/mymkdocs/develop/markdown.html</loc>
+         <lastmod>2024-09-19</lastmod>
+    </url>
+    <url>
+         <loc>https://j-yi-11.github.io/mymkdocs/blog/archive/2024.html</loc>
          <lastmod>2024-09-19</lastmod>
     </url>
 </urlset>

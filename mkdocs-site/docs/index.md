@@ -1,3 +1,5 @@
+这是主页的说明。
+
 # Welcome to MkDocs
 
 For full documentation visit [mkdocs.org](https://www.mkdocs.org).

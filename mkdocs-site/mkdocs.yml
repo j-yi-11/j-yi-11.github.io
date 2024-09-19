@@ -28,15 +28,13 @@ theme:
       - search.suggest   # 搜索输入一些字母时推荐补全整个单词
       - search.highlight   # 搜索出的文章关键词加入高亮
       - navigation.expand   # 打开Tab时左侧目录全部展开
-      #- navigation.indexes   #启用节索引页后，可以将文档直接附加到节
       - search.share   #搜索分享按钮
 
-
-nav: 
-  - 博客:
-    - 实用网站备忘录: blog/Webs.md  #.md文件的相对路径
-  - 开发: 
-    - Markdown: develop/markdown.md
+nav:
+  - Home: index.md     # 主页链接
+  - Blog:              # 博客链接
+      - Blogger:       # 在导航栏显示为 'Blogger'
+        - index: blog/index.md  # 博客主页指向 blog/index.md 文件
 
 
 markdown_extensions:
@@ -104,3 +102,48 @@ extra_css:
   # - https://cdn.jsdelivr.net/npm/lxgw-wenkai-lite-webfont@1.1.0/style.css #字体
   # - https://cdn.jsdelivr.net/npm/lxgw-wenkai-tc-webfont@1.0.0/style.css  #字体
   # - https://cdn.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.1.0/style.css  #字体
+
+extra:
+  alternate:
+    - name: English
+      link: https://wcowin-work.translate.goog/?_x_tr_sl=zh-CN&_x_tr_tl=en&_x_tr_hl=zh-CN&_x_tr_pto=wapp 
+      lang: en
+    - name: 中国(台湾)
+      link: https://wcowin-work.translate.goog/?_x_tr_sl=zh-CN&_x_tr_tl=zh-TW&_x_tr_hl=zh-CN&_x_tr_pto=wapp
+      lang: zh-TW
+  generator: false  #删除页脚显示“使用 MkDocs 材料制造”
+  social:
+    # - icon: fontawesome/brands/twitter 
+    #   link: https://twitter.com/wcowin_
+    - icon: fontawesome/brands/github
+      link: https://github.com/j-yi-11
+    - icon: fontawesome/brands/bilibili
+      link: https://space.bilibili.com/2141031639?spm_id_from=333.1007.0.0
+    - icon: fontawesome/solid/paper-plane
+      link: mailto:<qinfenglanyue@gmail.com> #联系方式
+
+plugins:
+  - search
+  - offline
+  - git-revision-date-localized:
+      type: iso_date
+      enable_creation_date: false
+      exclude:
+        - index.md 
+        - tag.md
+        # - waline.md
+        # - blog/posts/update.md
+        # - blog/posts/wkw.md
+        # - about/link.md
+  - blog:
+      # post_date_format: full #时间
+      draft: true
+      draft_if_future_date: true #自动将具有未来日期的帖子标记为草稿
+      post_readtime: false
+      # post_readtime_words_per_minute: 265  #计算帖子的阅读时间时读者每分钟预计阅读的字数
+      post_url_format: "{date}/{slug}"
+      pagination_url_format: "page/{page}"
+      authors_file: "{blog}/.authors.yml"  #作者信息
+  # 暂时取消tag
+  # - tags:
+  #     tags_file: tag.md  #分类标签
