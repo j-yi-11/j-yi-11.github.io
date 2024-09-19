@@ -1,4 +1,4 @@
-site_name: My Docs
+site_name: HomePage of CaiYa
 site_url: https://j-yi-11.github.io/mymkdocs
 site_author: j-yi-11
 
@@ -19,11 +19,8 @@ theme:
 
   features:
       - navigation.instant   #- header.autohide  #自动隐藏
-      #- announce.dismiss   #呈现可标记为由用户读取的临时公告，可以包含一个用于取消当前公告的按钮
       - navigation.tracking   #地址栏中的 URL 将自动更新为在目录中突出显示的活动锚点
       - navigation.tabs   #顶级部分将呈现在上面视口标题下方的菜单层中，但在移动设备上保持原样
-      #- navigation.tabs.sticky    #启用粘性选项卡后，导航选项卡将锁定在标题下方，并在向下滚动时始终保持可见
-      #- navigation.sections   #启用部分后，顶级部分在边栏中呈现为1220px以上视口的组，但在移动设备上保持原样
       - navigation.top   # 返回顶部的按钮 在上滑时出现
       - search.suggest   # 搜索输入一些字母时推荐补全整个单词
       - search.highlight   # 搜索出的文章关键词加入高亮
@@ -33,10 +30,23 @@ theme:
 nav:
   - Home: index.md     # 主页链接
   - Blog:              # 博客链接
-      - Blogger:       # 在导航栏显示为 'Blogger'
-        - index: blog/index.md  # 博客主页指向 blog/index.md 文件
-
-
+    - Blogger:       # 在导航栏显示为 'Blogger'
+      - index: blog/index.md  # 博客主页指向 blog/index.md 文件
+  - Develop:
+    - Markdown: develop/markdown.md
+    # - Latex:
+    #   - index: null
+    # - Python:
+    #   - index: null
+    # - C++:
+    #   - index: null
+    # - MATLAB:
+    #   - index: null
+    # - Java:
+    #   - index: null
+    # - RISC-V:
+    #   - index: null
+    
 markdown_extensions:
   - abbr
   - attr_list
@@ -130,7 +140,8 @@ plugins:
       enable_creation_date: false
       exclude:
         - index.md 
-        - tag.md
+        - blog/*.md
+        # - tag.md
         # - waline.md
         # - blog/posts/update.md
         # - blog/posts/wkw.md
