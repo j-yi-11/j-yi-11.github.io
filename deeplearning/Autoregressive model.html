@@ -1267,17 +1267,18 @@
 <h3 id="3-基于似然函数的生成式模型">3 基于似然函数的生成式模型<a class="headerlink" href="#3-基于似然函数的生成式模型" title="Permanent link"></a></h3>
 <p><strong>思路</strong>：不直接存储每个样本的概率值，而已使用一个含参的函数<span class="arithmatex">\(p_{\theta}(x)\)</span>去近似概率密度函数</p>
 <p>在保持易于训练的同时，如何设计函数逼近器表达复杂的联合分布？</p>
-<p>模型设计时有很多选择，有着众多的权衡与模型表达能力的评价标准</p>
 <h4 id="31-拟合分布">3.1 拟合分布<a class="headerlink" href="#31-拟合分布" title="Permanent link"></a></h4>
 <p><strong>步骤</strong></p>
-<p>- 数据集是来自于真实分布<span class="arithmatex">\(p_{data}\)</span>的数据样本<span class="arithmatex">\(x^{(1)},\cdots,x^{(n)}\)</span></p>
-<p>- 设计一个参数化的分布<span class="arithmatex">\(p_{ \theta}\)</span></p>
-<p>- 寻找参数优化损失函数
-$$
-\arg \min_{\theta} loss(\theta,x<sup _n_="(n)">{(1)},\cdots,x</sup>)
-$$
-希望损失函数与优化过程具有以下属性：</p>
 <ul>
+<li>
+<p>数据集是来自于真实分布<span class="arithmatex">\(p_{data}\)</span>的数据样本<span class="arithmatex">\(x^{(1)},\cdots,x^{(n)}\)</span></p>
+</li>
+<li>
+<p>设计一个参数化的分布<span class="arithmatex">\(p_{ \theta}\)</span></p>
+</li>
+<li>
+<p>寻找参数优化损失函数<span class="arithmatex">\(\arg \min_{\theta} loss(\theta,x^{(1)},\cdots,x^{(n)})\)</span>，希望损失函数与优化过程具有以下属性：</p>
+</li>
 <li>
 <p>可在大规模数据集上有效(百万样本量的数据集)</p>
 </li>
@@ -1295,10 +1296,7 @@ $$
 \]</div>
 <p>统计学上讲如果模型表达能力足够且拥有足够的数据，那么解极大似然估计问题就可得到生成新数据所需要的模型参数</p>
 <ul>
-<li>解极大似然等价于最小化数据分布与模型分布间的KL散度 
-  $$
-  \arg\max_{\theta} \mathbb{E}<em data="data">{x\sim p</em>)
-  $$}}[\log p_{model}(x;\theta)]=\arg\min_{\theta}KL(p_{data}||p_{model</li>
+<li>解极大似然等价于最小化数据分布与模型分布间的KL散度 <span class="arithmatex">\(\arg\max_{\theta} \mathbb{E}_{x\sim p_{data}}[\log p_{model}(x;\theta)]=\arg\min_{\theta}KL(p_{data}||p_{model})\)</span></li>
 </ul>
 <h4 id="33-学习算法-随机梯度下降法sgd">3.3 学习算法 随机梯度下降法SGD<a class="headerlink" href="#33-学习算法-随机梯度下降法sgd" title="Permanent link"></a></h4>
 <p>Stochastic Gradient Descent (SGD)</p>
@@ -1310,13 +1308,13 @@ $$
   $$</p>
 </li>
 <li>
-<p>解极大似然法，优化问题如下
-  $$
-  \arg\min_{\theta} \mathbb{E}<em data="data">{x\sim p</em>(x;\theta)]
-  $$
-  选择SGD的原因: 适用于大规模数据集与神经网路}}[-\log p_{model</p>
+<p>解极大似然法，优化问题如下</p>
 </li>
 </ul>
+<p>$$
+  \arg\min_{\theta} \mathbb{E}<em data="data">{x\sim p</em>(x;\theta)]
+  $$}}[-\log p_{model</p>
+<p>选择SGD的原因: 适用于大规模数据集与神经网路</p>
 <h4 id="34-模型设计">3.4 模型设计<a class="headerlink" href="#34-模型设计" title="Permanent link"></a></h4>
 <ul>
 <li>
