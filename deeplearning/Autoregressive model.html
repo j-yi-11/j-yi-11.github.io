@@ -1248,34 +1248,22 @@
 <p>概率的可能值有k个（k个可取值每个对应一个概率）：<span class="arithmatex">\(p_1,\cdots,p_k\)</span></p>
 </li>
 <li>
-<p>模型训练：统计频率<span class="arithmatex">\(p_i\)</span></p>
+<p>模型训练：统计频率<span class="arithmatex">\(p_i=\frac{i类数据出现次数}{数据集大小}\)</span></p>
 </li>
-</ul>
-<div class="arithmatex">\[
-\begin{eqnarray} 
-p_i=\frac{i类数据出现次数}{数据集大小}
-\end{eqnarray}
-\]</div>
-<ul>
 <li>
 <p><strong>推断</strong>：直接查看概率值<span class="arithmatex">\(p_1,\cdots,p_k\)</span></p>
 </li>
 <li>
-<p><strong>采样</strong>：(借助累计密度分布函数CDF的逆函数)</p>
+<p><strong>采样</strong>：借助<strong>累计密度分布函数CDF的逆函数</strong></p>
 </li>
 </ul>
-<p>---1) 计算累计密度分布函数
-$$
-F_i=p_1+\cdots+p_i  \quad \forall i \in{1,\cdots,k}
-$$
----2) 从均匀分布中采样 <span class="arithmatex">\(u\sim [0,1]\)</span></p>
-<p>---3) 返回使得<span class="arithmatex">\(u\leq F_i\)</span>成立最小的i</p>
+<p>---1) 计算累计密度分布函数 <span class="arithmatex">\(F_i=p_1+\cdots+p_i  \quad \forall i \in\{1,\cdots,k\}\)</span>
+---2) 从均匀分布中采样 <span class="arithmatex">\(u\sim [0,1]\)</span>
+---3) 返回使得<span class="arithmatex">\(u\leq F_i\)</span>成立最小的i</p>
 <p><strong>维度灾难</strong>：直方图作为生成式模型不适用于高维数据</p>
-<p>- MNIST 单个数据维度<span class="arithmatex">\(28\times28\)</span>，每个像素取{0,1}；</p>
-<p>- 离散的看全部空间有<span class="arithmatex">\(2^{784}\)</span>个概率值需要统计；</p>
-<p>- 合理的训练集数据仅仅存在于上述空间中的一部分(稀疏性，流形)；</p>
-<p>- 模型没有什么生成新数据的能力；</p>
-<p>- 训练集与测试集直方图存在偏差。</p>
+<ul>
+<li>MNIST 单个数据维度<span class="arithmatex">\(28\times28=784\)</span>，每个像素取{0,1}；离散的看全部空间有<span class="arithmatex">\(2^{784}\)</span>个概率值需要统计；合理的训练集数据仅仅存在于上述空间中的一部分(稀疏性，流形)；模型没有什么生成新数据的能力；训练集与测试集直方图存在偏差。</li>
+</ul>
 <h3 id="3-基于似然函数的生成式模型">3 基于似然函数的生成式模型<a class="headerlink" href="#3-基于似然函数的生成式模型" title="Permanent link"></a></h3>
 <p><strong>思路</strong>：不直接存储每个样本的概率值，而已使用一个含参的函数<span class="arithmatex">\(p_{\theta}(x)\)</span>去近似概率密度函数</p>
 <p>在保持易于训练的同时，如何设计函数逼近器表达复杂的联合分布？</p>
