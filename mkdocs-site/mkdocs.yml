@@ -1,0 +1,5 @@
+site_name: My Docs
+site_url: https://j-yi-11.github.io/mymkdocs
+site_author: j-yi-11
+theme:
+  name: material #主题
