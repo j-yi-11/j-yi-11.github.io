@@ -1209,11 +1209,7 @@
 <blockquote>
 <p>考虑到目标人物视频的模型容量大、数据规模小，直接微调整个大模型/模型后面几层会有问题，如 GPU 内存占用大、训练不稳定和灾难性遗忘等。LoRA适合于对大模型进行微调，最近用的也比较多。通过只更新LoRA的方式，可以起到很好的效果。</p>
 </blockquote>
-<p>整个过程的formula如下：</p>
-<p>$$</p>
-<p>I_{pred}=\text{SuperResolution}(\text{VolumeRenderer}⁢(P_{cano}<sup>*+\text{MotionAdapter}⁢([PNCC_{src},PNCC_{tgt}],\theta_1</sup><em>),cam_{tgt},\theta_2<sup>*),\theta_3</sup></em>)</p>
-<p>$$</p>
-<p>在训练过程中，取目标人物的一小段视频切片当做训练数据，去更新<span class="arithmatex">\(P_{cano}^*\)</span>和<span class="arithmatex">\(\theta_1^*\)</span>，<span class="arithmatex">\(\theta_2^*\)</span>，<span class="arithmatex">\(\theta_3^*\)</span>。</p>
+<p>整个过程的formula为：<span class="arithmatex">\(I_{pred}=\text{SuperResolution}(\text{VolumeRenderer}⁢(P_{cano}^*+\text{MotionAdapter}⁢([PNCC_{src},PNCC_{tgt}],\theta_1^*),cam_{tgt},\theta_2^*),\theta_3^*)\)</span>。在训练过程中，取目标人物的一小段视频切片当做训练数据，去更新<span class="arithmatex">\(P_{cano}^*\)</span>和<span class="arithmatex">\(\theta_1^*\)</span>，<span class="arithmatex">\(\theta_2^*\)</span>，<span class="arithmatex">\(\theta_3^*\)</span>。</p>
 <p>损失函数考虑了：L1损失<span class="arithmatex">\(\mathcal{L}_1\)</span>，LPIPS损失<span class="arithmatex">\(\mathcal{L}_{LPIPS}\)</span>，ID损失<span class="arithmatex">\(\mathcal{L}_{ID}\)</span>，最后这三者进行线性组合。</p>
 <blockquote>
 <p>损失函数这个设计比较常见。</p>
@@ -1231,20 +1227,16 @@
 <p>音频-动作流匹配模型</p>
 </li>
 </ol>
-<p>为了更好地<strong>生成expressive facial motion</strong>，本文利用<strong>流匹配</strong>的方式，模型的参数是transformer <span class="arithmatex">\(\theta\)</span>，预测的流场<span class="arithmatex">\(\phi\)</span>储存某个点<span class="arithmatex">\(x_t\)</span>指向目标分布的速度<span class="arithmatex">\(v_t=\frac{dx_t}{dt}\)</span>。时间步<span class="arithmatex">\(t\)</span>在inference的阶段会从0逐渐变到1。</p>
+<p>​        为了更好地<strong>生成expressive facial motion</strong>，本文利用<strong>流匹配</strong>的方式，模型的参数是transformer <span class="arithmatex">\(\theta\)</span>，预测的流场<span class="arithmatex">\(\phi\)</span>储存某个点<span class="arithmatex">\(x_t\)</span>指向目标分布的速度<span class="arithmatex">\(v_t=\frac{dx_t}{dt}\)</span>。时间步<span class="arithmatex">\(t\)</span>在inference的阶段会从0逐渐变到1。</p>
 <blockquote>
 <p>先验数据点<span class="arithmatex">\(x_0 \sim \mathcal{N}(0,I)\)</span>，目标数据点<span class="arithmatex">\(x_1 \sim q(x)\)</span>，<span class="arithmatex">\(q(x)\)</span>是实际的目标分布/ground truth。</p>
 </blockquote>
-<p>模型的输入是风格提示<span class="arithmatex">\(s\)</span>、音频条件<span class="arithmatex">\(a\)</span>和噪声运动<span class="arithmatex">\(x_t\)</span>。模型的输出是噪声运动<span class="arithmatex">\(x_t\)</span>对应的速度<span class="arithmatex">\(v_t(x,a,s;\theta)\)</span>。利用条件流匹配目标/CFM来训练：</p>
-<p>$$</p>
-<p>\mathcal{L}<em t_q_x_p_x_x_1_="t,q(x),p(x|x_1)">{CFM}=\mathbf{E}</em>||u_t(x|x_1)−v_t(x,a,s;\theta)||^2_2</p>
-<p>$$</p>
-<p>这个目标旨在最小化ground truth速度<span class="arithmatex">\(u_t(x|x_1)\)</span>（从<span class="arithmatex">\(x_t\)</span>到<span class="arithmatex">\(x_1\)</span>的唯一的最优传输路径）与模型预测结果速度<span class="arithmatex">\(v_t(x,a,s;\theta)\)</span>之间的差距。</p>
+<p>​        模型的输入是风格提示<span class="arithmatex">\(s\)</span>、音频条件<span class="arithmatex">\(a\)</span>和噪声运动<span class="arithmatex">\(x_t\)</span>。模型的输出是噪声运动<span class="arithmatex">\(x_t\)</span>对应的速度<span class="arithmatex">\(v_t(x,a,s;\theta)\)</span>。利用条件流匹配目标/CFM来训练：<span class="arithmatex">\(\mathcal{L}_{CFM}=\mathbf{E}_{t,q(x),p(x|x_1)}||u_t(x|x_1)−v_t(x,a,s;\theta)||^2_2\)</span>。这个目标旨在最小化ground truth速度<span class="arithmatex">\(u_t(x|x_1)\)</span>（从<span class="arithmatex">\(x_t\)</span>到<span class="arithmatex">\(x_1\)</span>的唯一的最优传输路径）与模型预测结果速度<span class="arithmatex">\(v_t(x,a,s;\theta)\)</span>之间的差距。</p>
 <blockquote>
 <p>流匹配的方法，之前很少见过。</p>
 </blockquote>
-<p>除了条件流匹配目标外，本文在去噪样本<span class="arithmatex">\(x_1\)</span>上添加<strong>唇音</strong>损失，以生成准确的面部动作。首先求解ODE 问题：</p>
-<p>$$
+<p>除了条件流匹配目标外，本文在去噪样本<span class="arithmatex">\(x_1\)</span>上添加<strong>唇音</strong>损失，以生成准确的面部动作。首先求解ODE 问题：
+   $$
    \frac{dx_t}{dt}=u_t\approx v_t(x_t,\theta), s.t. x_0\sim p(x), t\in [0,1]
    $$</p>
 <p>求解得到的速度<span class="arithmatex">\(v_t(x,a,s;\theta)\)</span>获得预测的样本<span class="arithmatex">\(\hat{x_1}\)</span>，把<span class="arithmatex">\(\hat{x_1}\)</span>输入到SyncNet获得判别同步损失<span class="arithmatex">\(\mathcal{L}_{sync}\)</span>。</p>
@@ -1255,6 +1247,7 @@
 <ol>
 <li>增强风格模仿的无分类指导</li>
 </ol>
+<p>无分类器引导（CFG）是一种流行的推理方法，它可以在条件扩散模型的采样过程中操纵条件强度。CFG 已成为文本到图像 Rombach 等人（2021 年）和其他弱条件生成任务的标准技术，而我们发现它也有助于提高我们的风格化音频到运动模型的风格模仿质量。具体来说，我们将有/无风格提示的两种网络预测混合起来，以构建 CFG 速度 </p>
 
 
 
