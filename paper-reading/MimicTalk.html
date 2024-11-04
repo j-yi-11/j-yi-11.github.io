@@ -954,6 +954,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#in-context-stylized-audio-to-motion" class="md-nav__link">
+    <span class="md-ellipsis">
+      In-Context Stylized Audio-to-Motion
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1089,6 +1098,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#in-context-stylized-audio-to-motion" class="md-nav__link">
+    <span class="md-ellipsis">
+      In-Context Stylized Audio-to-Motion
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1178,21 +1196,49 @@
 <p>这个很好理解，在大量人的说话视频上训练出来的模型，只会趋向于学习到这些人的共性，但是对于个性化的部分难以准确表达。</p>
 </blockquote>
 <p>因此，本文提出了一种高效的静态-动态-混合（SD-Hybrid）适应管道，以实现良好的静态/动态身份相似性，具体来说分为：</p>
-<ol>
-<li>Tri-Plane Inversion处理静态相似性：由于之前提取的<span class="arithmatex">\(P_{cano}\)</span>是从<strong>单个image生成</strong>的，存在信息偏差/损失，这是静态相似性差的主要原因。对此借鉴了GAN inversion的方法，本文将典型三维人脸表征<span class="arithmatex">\(P_{cano}\)</span>视为<strong>可学习参数，并对其进行优化</strong>，以最大化静态身份相似度。用视频的第一帧图像到三维的预测值初始化可学习的三平面，然后与其他参数一起优化三平面。</li>
-</ol>
+<ul>
+<li>Tri-Plane Inversion处理静态相似性：由于之前提取的<span class="arithmatex">\(P_{cano}\)</span>是从<strong>单个image生成</strong>的，存在信息偏差/损失，这是静态相似性差的主要原因。对此借鉴了GAN inversion的方法，本文将人脸表征<span class="arithmatex">\(P_{cano}\)</span>视为<strong>可学习参数</strong><span class="arithmatex">\(P_{cano}^*\)</span>，<strong>并对其进行优化</strong>，以最大化静态身份相似度。用视频的第一帧图像到三维的预测值初始化可学习的三平面，然后与其他参数一起优化三平面。</li>
+</ul>
 <blockquote>
 <p>这个思路感觉偏向于“PS”预处理，refine一下三维模型，只是采用inversion的方法去做。</p>
 </blockquote>
-<ol>
-<li>Injecting LoRAs处理动态相似性：由于人脸识别模型是在多说话者人脸对话数据集中学习运动到图像的<strong>平均映射</strong>，因此我们需要根据目标人物的视频<strong>调整通用模型</strong>，以学习其<strong>个性化</strong>的面部动态。为此，本文采用LoRA：通过向<strong>每个线性层和卷积核注入低阶可学习矩阵</strong>，LoRA 可以方便地插入到我们的人像识别模型中。</li>
-</ol>
+<ul>
+<li>Injecting LoRAs处理动态相似性：由于人脸识别模型是在多说话者人脸对话数据集中学习运动到图像的<strong>平均映射</strong>，因此我们需要根据目标人物的视频<strong>调整通用模型</strong>，以学习其<strong>个性化</strong>的面部动态。为此，本文采用LoRA：通过向<strong>每个线性层和卷积核注入低阶可学习矩阵</strong>。LoRA 可以插入到我们的模型中，分为：</li>
+<li>对于motion-adapter，插入<span class="arithmatex">\(\theta_1^*\)</span>；对于volume-renderer，插入<span class="arithmatex">\(\theta_2^*\)</span>；对于super-resolution，插入<span class="arithmatex">\(\theta_3^*\)</span>。</li>
+</ul>
 <blockquote>
 <p>考虑到目标人物视频的模型容量大、数据规模小，直接微调整个大模型/模型后面几层会有问题，如 GPU 内存占用大、训练不稳定和灾难性遗忘等。LoRA适合于对大模型进行微调，最近用的也比较多。通过只更新LoRA的方式，可以起到很好的效果。</p>
 </blockquote>
+<p>整个过程是：
+$$
+I_{pred}=\text{SuperResolution}(\text{VolumeRenderer}⁢(P_{cano}<sup>*+\text{MotionAdapter}⁢([PNCC_{src},PNCC_{tgt}],\theta_1</sup><em>),cam_{tgt},\theta_2<sup>*),\theta_3</sup></em>)
+$$
+在训练过程中，取目标人物的一小段视频切片当做训练数据，去更新<span class="arithmatex">\(P_{cano}^*\)</span>和<span class="arithmatex">\(\theta_1^*\)</span>，<span class="arithmatex">\(\theta_2^*\)</span>，<span class="arithmatex">\(\theta_3^*\)</span>。</p>
+<p>损失函数考虑了：L1损失<span class="arithmatex">\(\mathcal{L}_1\)</span>，LPIPS损失<span class="arithmatex">\(\mathcal{L}_{LPIPS}\)</span>，ID损失<span class="arithmatex">\(\mathcal{L}_{ID}\)</span>，最后这三者进行线性组合。</p>
+<blockquote>
+<p>损失函数这个设计比较常见。</p>
+</blockquote>
+<h3 id="in-context-stylized-audio-to-motion">In-Context Stylized Audio-to-Motion<a class="headerlink" href="#in-context-stylized-audio-to-motion" title="Permanent link"></a></h3>
+<p>以上各节中组成统一的运动条件说话脸部生成框架。这一节的上下文风格化音频-动作（ICS-A2M）模型，为<strong>音频驱动的场景</strong>生成个性化的面部动作，具体包括：</p>
 <ol>
-<li>Adaption Process</li>
+<li>音频引导的动作填充任务
+   受LLM和文本到语音合成中<strong>上下文学习方法</strong>启发，本文设计音频引导的运动填充任务：音频和动作对在时间上进行对齐，在信道上进行串联，并由音频-动作模型进行处理。</li>
+<li><strong>训练</strong>过程中<strong>随机</strong>屏蔽动作轨迹中的几个片段，并利用屏蔽片段上的<strong>运动重建误差</strong>对模型进行训练。由于该模型<strong>可获得</strong>之前/之后段未屏蔽的运动和完整的音轨，因此它<strong>能学会</strong>利用运动上下文中的说话方式来更准确地预测被屏蔽的共同语音运动。</li>
+<li>
+<p><strong>推理</strong>过程中将参考音频-动作对作为说话方式提示，将任意的驱动音频作为条件，将预测动作的噪声占位符作为模型的输入。这样，模型就能根据风格提示中提供的说话风格预测与音频同步的面部动作。</p>
+</li>
+<li>
+<p>音频-动作流匹配模型</p>
+</li>
 </ol>
+<p>利用<strong>流匹配</strong>的方式生成expressive facial motion，模型的参数是transformer <span class="arithmatex">\(\theta\)</span>，预测的流场<span class="arithmatex">\(\phi\)</span>储存某个点<span class="arithmatex">\(x_t\)</span>指向目标分布的速度<span class="arithmatex">\(v_t=\frac{dx_t}{dt}\)</span>。时间步<span class="arithmatex">\(t\)</span>在inference的阶段会从0逐渐变到1。</p>
+<blockquote>
+<p>先验数据点<span class="arithmatex">\(x_0 \sim \mathcal{N}(0,I)\)</span>，目标数据点<span class="arithmatex">\(x_1 \sim q(x)\)</span>，<span class="arithmatex">\(q(x)\)</span>是实际的目标分布/ground truth。</p>
+</blockquote>
+<p>模型的输入是风格提示<span class="arithmatex">\(s\)</span>、音频条件<span class="arithmatex">\(a\)</span>和噪声运动<span class="arithmatex">\(x_t\)</span>。模型的输出是噪声运动<span class="arithmatex">\(x_t\)</span>对应的速度<span class="arithmatex">\(v_t(x,a,s;\theta)\)</span>。利用条件流匹配目标/CFM来训练：
+   $$
+   \mathcal{L}<em t_q_x_p_x_x_1_="t,q(x),p(x|x_1)">{CFM}=\mathbf{E}</em>||u_t(x|x_1)−v_t(x,a,s;\theta)||^2_2
+   $$</p>
 
 
 
