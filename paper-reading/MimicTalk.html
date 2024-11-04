@@ -1209,11 +1209,11 @@
 <blockquote>
 <p>考虑到目标人物视频的模型容量大、数据规模小，直接微调整个大模型/模型后面几层会有问题，如 GPU 内存占用大、训练不稳定和灾难性遗忘等。LoRA适合于对大模型进行微调，最近用的也比较多。通过只更新LoRA的方式，可以起到很好的效果。</p>
 </blockquote>
-<p>整个过程的formula如下： 
-$$</p>
+<p>整个过程的formula如下：</p>
+<p>$$</p>
 <p>I_{pred}=\text{SuperResolution}(\text{VolumeRenderer}⁢(P_{cano}<sup>*+\text{MotionAdapter}⁢([PNCC_{src},PNCC_{tgt}],\theta_1</sup><em>),cam_{tgt},\theta_2<sup>*),\theta_3</sup></em>)</p>
-<p>$$
-在训练过程中，取目标人物的一小段视频切片当做训练数据，去更新<span class="arithmatex">\(P_{cano}^*\)</span>和<span class="arithmatex">\(\theta_1^*\)</span>，<span class="arithmatex">\(\theta_2^*\)</span>，<span class="arithmatex">\(\theta_3^*\)</span>。</p>
+<p>$$</p>
+<p>在训练过程中，取目标人物的一小段视频切片当做训练数据，去更新<span class="arithmatex">\(P_{cano}^*\)</span>和<span class="arithmatex">\(\theta_1^*\)</span>，<span class="arithmatex">\(\theta_2^*\)</span>，<span class="arithmatex">\(\theta_3^*\)</span>。</p>
 <p>损失函数考虑了：L1损失<span class="arithmatex">\(\mathcal{L}_1\)</span>，LPIPS损失<span class="arithmatex">\(\mathcal{L}_{LPIPS}\)</span>，ID损失<span class="arithmatex">\(\mathcal{L}_{ID}\)</span>，最后这三者进行线性组合。</p>
 <blockquote>
 <p>损失函数这个设计比较常见。</p>
@@ -1235,19 +1235,19 @@ $$</p>
 <blockquote>
 <p>先验数据点<span class="arithmatex">\(x_0 \sim \mathcal{N}(0,I)\)</span>，目标数据点<span class="arithmatex">\(x_1 \sim q(x)\)</span>，<span class="arithmatex">\(q(x)\)</span>是实际的目标分布/ground truth。</p>
 </blockquote>
-<p>模型的输入是风格提示<span class="arithmatex">\(s\)</span>、音频条件<span class="arithmatex">\(a\)</span>和噪声运动<span class="arithmatex">\(x_t\)</span>。模型的输出是噪声运动<span class="arithmatex">\(x_t\)</span>对应的速度<span class="arithmatex">\(v_t(x,a,s;\theta)\)</span>。利用条件流匹配目标/CFM来训练：
-   $$</p>
+<p>模型的输入是风格提示<span class="arithmatex">\(s\)</span>、音频条件<span class="arithmatex">\(a\)</span>和噪声运动<span class="arithmatex">\(x_t\)</span>。模型的输出是噪声运动<span class="arithmatex">\(x_t\)</span>对应的速度<span class="arithmatex">\(v_t(x,a,s;\theta)\)</span>。利用条件流匹配目标/CFM来训练：</p>
+<p>$$</p>
 <p>\mathcal{L}<em t_q_x_p_x_x_1_="t,q(x),p(x|x_1)">{CFM}=\mathbf{E}</em>||u_t(x|x_1)−v_t(x,a,s;\theta)||^2_2</p>
-<p>$$
-   这个目标旨在最小化ground truth速度<span class="arithmatex">\(u_t(x|x_1)\)</span>（从<span class="arithmatex">\(x_t\)</span>到<span class="arithmatex">\(x_1\)</span>的唯一的最优传输路径）与模型预测结果速度<span class="arithmatex">\(v_t(x,a,s;\theta)\)</span>之间的差距。</p>
+<p>$$</p>
+<p>这个目标旨在最小化ground truth速度<span class="arithmatex">\(u_t(x|x_1)\)</span>（从<span class="arithmatex">\(x_t\)</span>到<span class="arithmatex">\(x_1\)</span>的唯一的最优传输路径）与模型预测结果速度<span class="arithmatex">\(v_t(x,a,s;\theta)\)</span>之间的差距。</p>
 <blockquote>
 <p>流匹配的方法，之前很少见过。</p>
 </blockquote>
-<p>除了条件流匹配目标外，本文在去噪样本<span class="arithmatex">\(x_1\)</span>上添加<strong>唇音</strong>损失，以生成准确的面部动作。首先求解ODE 问题：
-   $$
+<p>除了条件流匹配目标外，本文在去噪样本<span class="arithmatex">\(x_1\)</span>上添加<strong>唇音</strong>损失，以生成准确的面部动作。首先求解ODE 问题：</p>
+<p>$$
    \frac{dx_t}{dt}=u_t\approx v_t(x_t,\theta), s.t. x_0\sim p(x), t\in [0,1]
-   $$
-   求解得到的速度<span class="arithmatex">\(v_t(x,a,s;\theta)\)</span>获得预测的样本<span class="arithmatex">\(\hat{x_1}\)</span>，把<span class="arithmatex">\(\hat{x_1}\)</span>输入到SyncNet获得判别同步损失<span class="arithmatex">\(\mathcal{L}_{sync}\)</span>。</p>
+   $$</p>
+<p>求解得到的速度<span class="arithmatex">\(v_t(x,a,s;\theta)\)</span>获得预测的样本<span class="arithmatex">\(\hat{x_1}\)</span>，把<span class="arithmatex">\(\hat{x_1}\)</span>输入到SyncNet获得判别同步损失<span class="arithmatex">\(\mathcal{L}_{sync}\)</span>。</p>
 <blockquote>
 <p>唇音损失是额外对嘴唇进行调整的。</p>
 </blockquote>
