@@ -1209,7 +1209,7 @@
 <blockquote>
 <p>考虑到目标人物视频的模型容量大、数据规模小，直接微调整个大模型/模型后面几层会有问题，如 GPU 内存占用大、训练不稳定和灾难性遗忘等。LoRA适合于对大模型进行微调，最近用的也比较多。通过只更新LoRA的方式，可以起到很好的效果。</p>
 </blockquote>
-<p>整个过程的formula为：<span class="arithmatex">\(I_{pred}=\text{SuperResolution}(\text{VolumeRenderer}⁢(P_{cano}^*+\text{MotionAdapter}⁢([PNCC_{src},PNCC_{tgt}],\theta_1^*),cam_{tgt},\theta_2^*),\theta_3^*)\)</span>。</p>
+<p>整个过程的formula为：<span class="arithmatex">\(<span class="arithmatex">\(I_{pred}=\text{SuperResolution}(\text{VolumeRenderer}⁢(P_{cano}^*+\text{MotionAdapter}⁢([PNCC_{src},PNCC_{tgt}],\theta_1^*),cam_{tgt},\theta_2^*),\theta_3^*)\)</span>\)</span>。</p>
 <p>在训练过程中，取目标人物的一小段视频切片当做训练数据，去更新<span class="arithmatex">\(P_{cano}^*\)</span>和<span class="arithmatex">\(\theta_1^*\)</span>，<span class="arithmatex">\(\theta_2^*\)</span>，<span class="arithmatex">\(\theta_3^*\)</span>。</p>
 <p>损失函数考虑了：L1损失<span class="arithmatex">\(\mathcal{L}_1\)</span>，LPIPS损失<span class="arithmatex">\(\mathcal{L}_{LPIPS}\)</span>，ID损失<span class="arithmatex">\(\mathcal{L}_{ID}\)</span>，最后这三者进行线性组合。</p>
 <blockquote>
