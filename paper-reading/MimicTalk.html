@@ -1238,7 +1238,8 @@ $$
 <p>模型的输入是风格提示<span class="arithmatex">\(s\)</span>、音频条件<span class="arithmatex">\(a\)</span>和噪声运动<span class="arithmatex">\(x_t\)</span>。模型的输出是噪声运动<span class="arithmatex">\(x_t\)</span>对应的速度<span class="arithmatex">\(v_t(x,a,s;\theta)\)</span>。利用条件流匹配目标/CFM来训练：
    $$
    \mathcal{L}<em t_q_x_p_x_x_1_="t,q(x),p(x|x_1)">{CFM}=\mathbf{E}</em>||u_t(x|x_1)−v_t(x,a,s;\theta)||^2_2
-   $$</p>
+   $$
+   这个目标旨在最小化ground truth速度<span class="arithmatex">\(u_t(x|x_1)\)</span>（从<span class="arithmatex">\(x_t\)</span>到<span class="arithmatex">\(x_1\)</span>的唯一的最优传输路径）与模型预测结果速度<span class="arithmatex">\(v_t(x,a,s;\theta)\)</span>之间的差距。</p>
 
 
 
