@@ -1,0 +1,2043 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="j-yi-11">
+      
+      
+        <link rel="canonical" href="https://j-yi-11.github.io/mymkdocs/deeplearning/Autoregressive%20model.html">
+      
+      
+        <link rel="prev" href="../develop/java.html">
+      
+      
+        <link rel="next" href="../paper-reading/MimicTalk.html">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.35">
+    
+    
+      
+        <title>AutoRegressiveModel - HomePage of CaiYa</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.35f28582.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+        <script src="https://unpkg.com/iframe-worker/shim"></script>
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="../stylesheets/link.css">
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@latest/dist/gitalk.css">
+    
+      <link rel="stylesheet" href="../ckplayer/css/ckplayer.css">
+    
+      <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.1.0/style.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#1-动机" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../index.html" title="HomePage of CaiYa" class="md-header__button md-logo" aria-label="HomePage of CaiYa" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            HomePage of CaiYa
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              AutoRegressiveModel
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="Select language">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="https://wcowin-work.translate.goog/?_x_tr_sl=zh-CN&_x_tr_tl=en&_x_tr_hl=zh-CN&_x_tr_pto=wapp" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="https://wcowin-work.translate.goog/?_x_tr_sl=zh-CN&_x_tr_tl=zh-TW&_x_tr_hl=zh-CN&_x_tr_pto=wapp" hreflang="zh-TW" class="md-select__link">
+              中国(台湾)
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../index.html" class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../blog/index.html" class="md-tabs__link">
+          
+  
+  Blog
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../develop/markdown.html" class="md-tabs__link">
+          
+  
+  Develop
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="Autoregressive%20model.html" class="md-tabs__link">
+          
+  
+  Deep Learning
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../paper-reading/MimicTalk.html" class="md-tabs__link">
+          
+  
+  Paper Reading
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../index.html" title="HomePage of CaiYa" class="md-nav__button md-logo" aria-label="HomePage of CaiYa" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    HomePage of CaiYa
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../index.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Blog
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Blog
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../blog/index.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    我的博客
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Archive
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            Archive
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../blog/archive/2024.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2024
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Develop
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Develop
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../develop/markdown.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Markdown
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../develop/latex.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Latex
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../develop/python.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Python
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../develop/c%2B%2B.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    C++
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../develop/matlab.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    MATLAB
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../develop/java.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Java
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Deep Learning
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Deep Learning
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    AutoRegressiveModel
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="Autoregressive%20model.html" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    AutoRegressiveModel
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-动机" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. 动机
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 动机">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-需要解决的问题" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1 需要解决的问题
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-基于似然的模型从来自于真实分布p_data的数据样本x1cdotsxn来估计p_data" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2 基于似然的模型：从来自于真实分布\(p_{data}\)的数据样本\(x^{(1)},\cdots,x^{(n)}\)来估计\(p_{data}\)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-简单的生成式模型textcolorblue频率分布直方图" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. 简单的生成式模型：\(\textcolor{blue}{频率分布直方图}\)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 简单的生成式模型：\(\textcolor{blue}{频率分布直方图}\)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-模型频率分布直方图" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1 模型：频率分布直方图
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-基于似然函数的生成式模型" class="md-nav__link">
+    <span class="md-ellipsis">
+      3 基于似然函数的生成式模型
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3 基于似然函数的生成式模型">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-拟合分布" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1 拟合分布
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-极大似然估计-mle" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2 极大似然估计 MLE
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-学习算法-随机梯度下降法sgd" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.3 学习算法 随机梯度下降法SGD
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-模型设计" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.4 模型设计
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-自回归模型" class="md-nav__link">
+    <span class="md-ellipsis">
+      4 自回归模型
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4 自回归模型">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-autoregressive-models概念" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1 Autoregressive models概念
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-权值共享" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2 权值共享
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-自回归模型-textcolorbluechar-rnn" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3 自回归模型 \(\textcolor{blue}{Char-RNN}\)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-textcolorbluemade-带有mask的自编码器" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.4 \(\textcolor{blue}{MADE}\): 带有mask的自编码器
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45-wavenet-带有mask的1d卷积" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.5 Wavenet: 带有mask的1D卷积
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#46-pixelcnn-带有mask的2d卷积" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.6 PixelCNN: 带有mask的2D卷积
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-attention注意力" class="md-nav__link">
+    <span class="md-ellipsis">
+      5 Attention注意力
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-自回归模型的发展" class="md-nav__link">
+    <span class="md-ellipsis">
+      6 自回归模型的发展
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Paper Reading
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Paper Reading
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../paper-reading/MimicTalk.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    MimicTalk
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-动机" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. 动机
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 动机">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-需要解决的问题" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1 需要解决的问题
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-基于似然的模型从来自于真实分布p_data的数据样本x1cdotsxn来估计p_data" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2 基于似然的模型：从来自于真实分布\(p_{data}\)的数据样本\(x^{(1)},\cdots,x^{(n)}\)来估计\(p_{data}\)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-简单的生成式模型textcolorblue频率分布直方图" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. 简单的生成式模型：\(\textcolor{blue}{频率分布直方图}\)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 简单的生成式模型：\(\textcolor{blue}{频率分布直方图}\)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-模型频率分布直方图" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1 模型：频率分布直方图
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-基于似然函数的生成式模型" class="md-nav__link">
+    <span class="md-ellipsis">
+      3 基于似然函数的生成式模型
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3 基于似然函数的生成式模型">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-拟合分布" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1 拟合分布
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-极大似然估计-mle" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2 极大似然估计 MLE
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-学习算法-随机梯度下降法sgd" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.3 学习算法 随机梯度下降法SGD
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-模型设计" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.4 模型设计
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-自回归模型" class="md-nav__link">
+    <span class="md-ellipsis">
+      4 自回归模型
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4 自回归模型">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-autoregressive-models概念" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1 Autoregressive models概念
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-权值共享" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2 权值共享
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-自回归模型-textcolorbluechar-rnn" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3 自回归模型 \(\textcolor{blue}{Char-RNN}\)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-textcolorbluemade-带有mask的自编码器" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.4 \(\textcolor{blue}{MADE}\): 带有mask的自编码器
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45-wavenet-带有mask的1d卷积" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.5 Wavenet: 带有mask的1D卷积
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#46-pixelcnn-带有mask的2d卷积" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.6 PixelCNN: 带有mask的2D卷积
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-attention注意力" class="md-nav__link">
+    <span class="md-ellipsis">
+      5 Attention注意力
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-自回归模型的发展" class="md-nav__link">
+    <span class="md-ellipsis">
+      6 自回归模型的发展
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  <h1>AutoRegressiveModel</h1>
+
+<h3 id="1-动机">1. 动机<a class="headerlink" href="#1-动机" title="Permanent link"></a></h3>
+<h4 id="11-需要解决的问题">1.1 需要解决的问题<a class="headerlink" href="#11-需要解决的问题" title="Permanent link"></a></h4>
+<ul>
+<li>生成数据：人工合成的图片视频、音频、文本</li>
+<li>压缩数据：构建高效的编码</li>
+<li>异常检测</li>
+</ul>
+<h4 id="12-基于似然的模型从来自于真实分布p_data的数据样本x1cdotsxn来估计p_data">1.2 基于似然的模型：从来自于真实分布<span class="arithmatex">\(p_{data}\)</span>的数据样本<span class="arithmatex">\(x^{(1)},\cdots,x^{(n)}\)</span>来估计<span class="arithmatex">\(p_{data}\)</span><a class="headerlink" href="#12-基于似然的模型从来自于真实分布p_data的数据样本x1cdotsxn来估计p_data" title="Permanent link"></a></h4>
+<p><strong>学习数据分布</strong>可以计算任意样本的概率值并且采样生成新的样本。例如，需要学习数据分布：[128,128,3]维度的RGB图像数据在接近50000维的空间中分布。</p>
+<p>需要模型具有的属性：</p>
+<ul>
+<li>高效训练、高效的模型表达；</li>
+<li>丰富的表达能力与生成能力</li>
+<li>可高效快速采样(<span class="arithmatex">\(\textcolor{green}{并行采样}\)</span>)</li>
+<li>压缩比与压缩速度</li>
+</ul>
+<h3 id="2-简单的生成式模型textcolorblue频率分布直方图">2. 简单的生成式模型：<span class="arithmatex">\(\textcolor{blue}{频率分布直方图}\)</span><a class="headerlink" href="#2-简单的生成式模型textcolorblue频率分布直方图" title="Permanent link"></a></h3>
+<p>回顾一下：目标是从来自于真实分布<span class="arithmatex">\(p_{data}\)</span>的数据样本<span class="arithmatex">\(x^{(1)},\cdots,x^{(n)}\)</span>来估计<span class="arithmatex">\(p_{data}\)</span></p>
+<p>假设数据会在一个有限的集合内取值<span class="arithmatex">\(\{1,\cdots,k\}\)</span></p>
+<h4 id="21-模型频率分布直方图">2.1 模型：<em>频率分布直方图</em><a class="headerlink" href="#21-模型频率分布直方图" title="Permanent link"></a></h4>
+<ul>
+<li>
+<p>概率的可能值有k个（k个可取值每个对应一个概率）：<span class="arithmatex">\(p_1,\cdots,p_k\)</span></p>
+</li>
+<li>
+<p>模型训练：统计频率<span class="arithmatex">\(p_i=\frac{i类数据出现次数}{数据集大小}\)</span></p>
+</li>
+<li>
+<p><strong>推断</strong>：直接查看概率值<span class="arithmatex">\(p_1,\cdots,p_k\)</span></p>
+</li>
+<li>
+<p><strong>采样</strong>：借助<strong>累计密度分布函数CDF的逆函数</strong></p>
+</li>
+</ul>
+<p>---1) 计算累计密度分布函数 <span class="arithmatex">\(F_i=p_1+\cdots+p_i  \quad \forall i \in\{1,\cdots,k\}\)</span>
+---2) 从均匀分布中采样 <span class="arithmatex">\(u\sim [0,1]\)</span>
+---3) 返回使得<span class="arithmatex">\(u\leq F_i\)</span>成立最小的i</p>
+<p><strong>维度灾难</strong>：直方图作为生成式模型不适用于高维数据</p>
+<ul>
+<li>MNIST 单个数据维度<span class="arithmatex">\(28\times28=784\)</span>，每个像素取{0,1}；离散的看全部空间有<span class="arithmatex">\(2^{784}\)</span>个概率值需要统计；合理的训练集数据仅仅存在于上述空间中的一部分(稀疏性，流形)；模型没有什么生成新数据的能力；训练集与测试集直方图存在偏差。</li>
+</ul>
+<h3 id="3-基于似然函数的生成式模型">3 基于似然函数的生成式模型<a class="headerlink" href="#3-基于似然函数的生成式模型" title="Permanent link"></a></h3>
+<p><strong>思路</strong>：不直接存储每个样本的概率值，而已使用一个含参的函数<span class="arithmatex">\(p_{\theta}(x)\)</span>去近似概率密度函数</p>
+<p>在保持易于训练的同时，如何设计函数逼近器表达复杂的联合分布？</p>
+<h4 id="31-拟合分布">3.1 拟合分布<a class="headerlink" href="#31-拟合分布" title="Permanent link"></a></h4>
+<p><strong>步骤</strong></p>
+<ul>
+<li>
+<p>数据集是来自于真实分布<span class="arithmatex">\(p_{data}\)</span>的数据样本<span class="arithmatex">\(x^{(1)},\cdots,x^{(n)}\)</span></p>
+</li>
+<li>
+<p>设计一个参数化的分布<span class="arithmatex">\(p_{ \theta}\)</span></p>
+</li>
+<li>
+<p>寻找参数优化损失函数<span class="arithmatex">\(\arg \min_{\theta} loss(\theta,x^{(1)},\cdots,x^{(n)})\)</span>，希望损失函数与优化过程具有以下属性：</p>
+</li>
+<li>
+<p>可在大规模数据集上有效(百万样本量的数据集)</p>
+</li>
+<li>
+<p>得出的<span class="arithmatex">\(p_{\theta}\)</span>要接近于真实分布<span class="arithmatex">\(p_{data}\)</span></p>
+</li>
+<li>训练结束得到的只是经验分布，并不是真实分布。希望模型具有一定生成能力</li>
+</ul>
+<h4 id="32-极大似然估计-mle">3.2 极大似然估计 MLE<a class="headerlink" href="#32-极大似然估计-mle" title="Permanent link"></a></h4>
+<ul>
+<li>极大似然估计：解以下优化问题</li>
+</ul>
+<div class="arithmatex">\[
+\arg \min_{\theta} loss(\theta,x^{(1)},\cdots,x^{(n)})=\frac{1}{n}\sum_{i=1}^{n}-\log p_{\theta}(x^{(i)})
+\]</div>
+<p>统计学上讲如果模型表达能力足够且拥有足够的数据，那么解极大似然估计问题就可得到生成新数据所需要的模型参数</p>
+<ul>
+<li>解极大似然等价于最小化数据分布与模型分布间的KL散度 <span class="arithmatex">\(\arg\max_{\theta} \mathbb{E}_{x\sim p_{data}}[\log p_{model}(x;\theta)]=\arg\min_{\theta}KL(p_{data}||p_{model})\)</span></li>
+</ul>
+<h4 id="33-学习算法-随机梯度下降法sgd">3.3 学习算法 随机梯度下降法SGD<a class="headerlink" href="#33-学习算法-随机梯度下降法sgd" title="Permanent link"></a></h4>
+<p>Stochastic Gradient Descent (SGD)</p>
+<ul>
+<li>
+<p>SGD最小化期望损失，对于一个可微函数<span class="arithmatex">\(f(\theta)\)</span>
+  $$
+  \arg \min_{\theta}\mathbb{E}[f(\theta)]
+  $$</p>
+</li>
+<li>
+<p>解极大似然法，优化问题如下</p>
+</li>
+</ul>
+<p>$$
+  \arg\min_{\theta} \mathbb{E}<em data="data">{x\sim p</em>(x;\theta)]
+  $$}}[-\log p_{model</p>
+<p>选择SGD的原因: 适用于大规模数据集与神经网路</p>
+<h4 id="34-模型设计">3.4 模型设计<a class="headerlink" href="#34-模型设计" title="Permanent link"></a></h4>
+<ul>
+<li>
+<p>MLE与SGD的核心是高效计算 <span class="arithmatex">\(\log p(x)\)</span></p>
+</li>
+<li>
+<p>我们将把<span class="arithmatex">\(p_{\theta}\)</span>设计为深度神经网络(DNN)，DNN具有高效的表达能力，且可在GPU等设备上加速运算</p>
+</li>
+<li>
+<p>如何设计这些网络？</p>
+</li>
+<li>
+<p>要保证模型概率分布归一化且恒为非负值
+    $$
+    \forall{i},\sum_{x}p_{\theta}(x)=1  \quad and \quad p_{\theta}(x) \geq0, \forall{x}
+    $$</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\log p_{\theta}(x)\)</span>易于计算且求导</p>
+</li>
+</ul>
+<h3 id="4-自回归模型">4 自回归模型<a class="headerlink" href="#4-自回归模型" title="Permanent link"></a></h3>
+<h4 id="41-autoregressive-models概念">4.1 Autoregressive models概念<a class="headerlink" href="#41-autoregressive-models概念" title="Permanent link"></a></h4>
+<ul>
+<li>使用神经网络建模条件概率分布将会产生一个可解的log-likelihood并且可计算梯度</li>
+</ul>
+<div class="arithmatex">\[
+\log p_{\theta}(\mathbf{x})=\sum_{i=1}^{d} \log p_{\theta}\left(x_{i} \mid \operatorname{parents}\left(x_{i}\right)\right)
+\]</div>
+<ul>
+<li>
+<p>结合概率公式中的链式法则
+  $$
+  \log p(\mathbf{x})=\sum_{i=1}^{d} \log p\left(x_{i} \mid \mathbf{x}_{1: i-1}\right)
+  $$</p>
+</li>
+<li>
+<p>通过神经网络建模条件概率分布，整体表达一个贝叶斯网络，这就是自回归模型。</p>
+</li>
+</ul>
+<p><strong>举例：</strong></p>
+<p>数据集：<span class="arithmatex">\(x_1,x_2\)</span></p>
+<p>模型：<span class="arithmatex">\(p(x_1,x_2)=p(x_1)p(x_2|x_1)\)</span></p>
+<ul>
+<li>假设<span class="arithmatex">\(p(x_1)\)</span>是频率分布直方图</li>
+<li>假设<span class="arithmatex">\(p(x_2|x_1)\)</span>是多层感知机<ul>
+<li>输入是<span class="arithmatex">\(x_1\)</span></li>
+<li>输出是<span class="arithmatex">\(x_2\)</span>的分布(逻辑值，后接Softmax层归一化)</li>
+</ul>
+</li>
+</ul>
+<h4 id="42-权值共享">4.2 权值共享<a class="headerlink" href="#42-权值共享" title="Permanent link"></a></h4>
+<p>引入权值共享的两点原因</p>
+<ul>
+<li>
+<p>文本生成时，参数量过多</p>
+</li>
+<li>
+<p>对建模条件概率分布的神经网络上加入权值共享，促使信息共享</p>
+</li>
+</ul>
+<p>两个权值共享模型的代表：</p>
+<ul>
+<li>递归神经网络(Recurrent neural networks)</li>
+<li>掩膜 (Masking)</li>
+</ul>
+<h4 id="43-自回归模型-textcolorbluechar-rnn">4.3 自回归模型 <span class="arithmatex">\(\textcolor{blue}{Char-RNN}\)</span><a class="headerlink" href="#43-自回归模型-textcolorbluechar-rnn" title="Permanent link"></a></h4>
+<div class="arithmatex">\[
+\log p(\mathbf{x})=\sum_{i=1}^{d}\log p(x_i|\mathbf{x_{1:i-1}})
+\]</div>
+<p><span class="arithmatex">\(\mathbf{x}\)</span>为一个样本的字母序列</p>
+<!-- ![](\fig\fig2\fig2.png) -->
+
+<p><center>Char-RNN[Karpathy, 2015] 同色箭头代表权值共享</p>
+<ul>
+<li><strong>举例</strong></li>
+</ul>
+<p>MNIST手写数字生成(图像二值化)</p>
+<p>数据集：尺寸28×28，样本60000训练集，10000测试集</p>
+<!-- ![](\fig\fig2\fig3.png) -->
+
+<p><center>二值化MNIST数据集</p>
+<ul>
+<li>模型代码如下</li>
+</ul>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-0-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-0-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-0-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-0-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-0-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-0-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-0-10">10</a></span>
+<span class="normal"><a href="#__codelineno-0-11">11</a></span>
+<span class="normal"><a href="#__codelineno-0-12">12</a></span>
+<span class="normal"><a href="#__codelineno-0-13">13</a></span>
+<span class="normal"><a href="#__codelineno-0-14">14</a></span>
+<span class="normal"><a href="#__codelineno-0-15">15</a></span>
+<span class="normal"><a href="#__codelineno-0-16">16</a></span>
+<span class="normal"><a href="#__codelineno-0-17">17</a></span>
+<span class="normal"><a href="#__codelineno-0-18">18</a></span>
+<span class="normal"><a href="#__codelineno-0-19">19</a></span>
+<span class="normal"><a href="#__codelineno-0-20">20</a></span>
+<span class="normal"><a href="#__codelineno-0-21">21</a></span>
+<span class="normal"><a href="#__codelineno-0-22">22</a></span>
+<span class="normal"><a href="#__codelineno-0-23">23</a></span>
+<span class="normal"><a href="#__codelineno-0-24">24</a></span>
+<span class="normal"><a href="#__codelineno-0-25">25</a></span>
+<span class="normal"><a href="#__codelineno-0-26">26</a></span>
+<span class="normal"><a href="#__codelineno-0-27">27</a></span>
+<span class="normal"><a href="#__codelineno-0-28">28</a></span>
+<span class="normal"><a href="#__codelineno-0-29">29</a></span>
+<span class="normal"><a href="#__codelineno-0-30">30</a></span>
+<span class="normal"><a href="#__codelineno-0-31">31</a></span>
+<span class="normal"><a href="#__codelineno-0-32">32</a></span>
+<span class="normal"><a href="#__codelineno-0-33">33</a></span>
+<span class="normal"><a href="#__codelineno-0-34">34</a></span>
+<span class="normal"><a href="#__codelineno-0-35">35</a></span>
+<span class="normal"><a href="#__codelineno-0-36">36</a></span>
+<span class="normal"><a href="#__codelineno-0-37">37</a></span>
+<span class="normal"><a href="#__codelineno-0-38">38</a></span>
+<span class="normal"><a href="#__codelineno-0-39">39</a></span>
+<span class="normal"><a href="#__codelineno-0-40">40</a></span>
+<span class="normal"><a href="#__codelineno-0-41">41</a></span>
+<span class="normal"><a href="#__codelineno-0-42">42</a></span>
+<span class="normal"><a href="#__codelineno-0-43">43</a></span>
+<span class="normal"><a href="#__codelineno-0-44">44</a></span>
+<span class="normal"><a href="#__codelineno-0-45">45</a></span>
+<span class="normal"><a href="#__codelineno-0-46">46</a></span>
+<span class="normal"><a href="#__codelineno-0-47">47</a></span>
+<span class="normal"><a href="#__codelineno-0-48">48</a></span>
+<span class="normal"><a href="#__codelineno-0-49">49</a></span>
+<span class="normal"><a href="#__codelineno-0-50">50</a></span>
+<span class="normal"><a href="#__codelineno-0-51">51</a></span>
+<span class="normal"><a href="#__codelineno-0-52">52</a></span>
+<span class="normal"><a href="#__codelineno-0-53">53</a></span>
+<span class="normal"><a href="#__codelineno-0-54">54</a></span>
+<span class="normal"><a href="#__codelineno-0-55">55</a></span>
+<span class="normal"><a href="#__codelineno-0-56">56</a></span>
+<span class="normal"><a href="#__codelineno-0-57">57</a></span>
+<span class="normal"><a href="#__codelineno-0-58">58</a></span>
+<span class="normal"><a href="#__codelineno-0-59">59</a></span>
+<span class="normal"><a href="#__codelineno-0-60">60</a></span>
+<span class="normal"><a href="#__codelineno-0-61">61</a></span>
+<span class="normal"><a href="#__codelineno-0-62">62</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="k">class</span> <span class="nc">RNN_Example</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">append_loc</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">),</span> <span class="n">hidden_size</span><span class="o">=</span><span class="mi">256</span><span class="p">):</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">device</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">append_loc</span> <span class="o">=</span> <span class="n">append_loc</span> 
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">input_channels</span> <span class="o">=</span> <span class="n">input_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2</span> <span class="k">if</span> <span class="n">append_loc</span> <span class="k">else</span> <span class="n">input_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">hidden_size</span> <span class="o">=</span> <span class="n">hidden_size</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">input_shape</span> <span class="o">=</span> <span class="n">input_shape</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">canvas_size</span> <span class="o">=</span> <span class="n">input_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">input_shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11"></a>
+<a id="__codelineno-0-12" name="__codelineno-0-12"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">lstm</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">LSTM</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">input_channels</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">,</span> <span class="n">num_layers</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">batch_first</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">fc</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">,</span> <span class="n">input_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14"></a>
+<a id="__codelineno-0-15" name="__codelineno-0-15"></a>    <span class="k">def</span> <span class="nf">nll</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16"></a>        <span class="c1"># 前向传播</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17"></a>        <span class="n">batch_size</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18"></a>        <span class="n">x_inp</span> <span class="o">=</span> <span class="n">append_location</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">append_loc</span> <span class="k">else</span> <span class="n">x</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19"></a>
+<a id="__codelineno-0-20" name="__codelineno-0-20"></a>        <span class="c1"># 数据右移一位，作为输入序列</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21"></a>        <span class="n">x_inp</span> <span class="o">=</span> <span class="n">x_inp</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">contiguous</span><span class="p">()</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">canvas_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_channels</span><span class="p">)</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22"></a>        <span class="n">x_inp</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">((</span><span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_channels</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">),</span> <span class="n">x_inp</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23"></a>
+<a id="__codelineno-0-24" name="__codelineno-0-24"></a>        <span class="n">h0</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">x_inp</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25"></a>        <span class="n">c0</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">x_inp</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26"></a>
+<a id="__codelineno-0-27" name="__codelineno-0-27"></a>        <span class="c1"># 输入序列--&gt;LSTM</span>
+<a id="__codelineno-0-28" name="__codelineno-0-28"></a>        <span class="n">out</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lstm</span><span class="p">(</span><span class="n">x_inp</span><span class="p">,</span> <span class="p">(</span><span class="n">h0</span><span class="p">,</span> <span class="n">c0</span><span class="p">))</span>  
+<a id="__codelineno-0-29" name="__codelineno-0-29"></a>
+<a id="__codelineno-0-30" name="__codelineno-0-30"></a>        <span class="c1"># 全连接网络解码获取输出序列</span>
+<a id="__codelineno-0-31" name="__codelineno-0-31"></a>        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fc</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># b x 784</span>
+<a id="__codelineno-0-32" name="__codelineno-0-32"></a>
+<a id="__codelineno-0-33" name="__codelineno-0-33"></a>        <span class="k">return</span> <span class="n">F</span><span class="o">.</span><span class="n">binary_cross_entropy_with_logits</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+<a id="__codelineno-0-34" name="__codelineno-0-34"></a>
+<a id="__codelineno-0-35" name="__codelineno-0-35"></a>
+<a id="__codelineno-0-36" name="__codelineno-0-36"></a>    <span class="k">def</span> <span class="nf">sample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+<a id="__codelineno-0-37" name="__codelineno-0-37"></a>        <span class="c1"># 采样生成数据</span>
+<a id="__codelineno-0-38" name="__codelineno-0-38"></a>        <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+<a id="__codelineno-0-39" name="__codelineno-0-39"></a>            <span class="n">samples</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_channels</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+<a id="__codelineno-0-40" name="__codelineno-0-40"></a>            <span class="n">h</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+<a id="__codelineno-0-41" name="__codelineno-0-41"></a>            <span class="n">c</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+<a id="__codelineno-0-42" name="__codelineno-0-42"></a>
+<a id="__codelineno-0-43" name="__codelineno-0-43"></a>            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">canvas_size</span><span class="p">):</span>
+<a id="__codelineno-0-44" name="__codelineno-0-44"></a>                <span class="n">x_inp</span> <span class="o">=</span> <span class="n">samples</span><span class="p">[:,</span> <span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+<a id="__codelineno-0-45" name="__codelineno-0-45"></a>                <span class="n">out</span><span class="p">,</span> <span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lstm</span><span class="p">(</span><span class="n">x_inp</span><span class="p">,</span> <span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">c</span><span class="p">))</span>
+<a id="__codelineno-0-46" name="__codelineno-0-46"></a>                <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fc</span><span class="p">(</span><span class="n">out</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">:])</span>
+<a id="__codelineno-0-47" name="__codelineno-0-47"></a>                <span class="n">prob</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+<a id="__codelineno-0-48" name="__codelineno-0-48"></a>                <span class="c1"># 伯努利分布对输出预测采样</span>
+<a id="__codelineno-0-49" name="__codelineno-0-49"></a>                <span class="n">sample_pixel</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">bernoulli</span><span class="p">(</span><span class="n">prob</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> 
+<a id="__codelineno-0-50" name="__codelineno-0-50"></a>                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">append_loc</span><span class="p">:</span>
+<a id="__codelineno-0-51" name="__codelineno-0-51"></a>                    <span class="n">loc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">i</span> <span class="o">//</span> <span class="mi">28</span><span class="p">,</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">28</span><span class="p">])</span> <span class="o">/</span> <span class="mi">27</span>
+<a id="__codelineno-0-52" name="__codelineno-0-52"></a>                    <span class="n">loc</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">(</span><span class="n">loc</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+<a id="__codelineno-0-53" name="__codelineno-0-53"></a>                    <span class="n">loc</span> <span class="o">=</span> <span class="n">loc</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-0-54" name="__codelineno-0-54"></a>                    <span class="n">sample_pixel</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">((</span><span class="n">sample_pixel</span><span class="p">,</span> <span class="n">loc</span><span class="p">),</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-0-55" name="__codelineno-0-55"></a>                <span class="n">samples</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">((</span><span class="n">samples</span><span class="p">,</span> <span class="n">sample_pixel</span><span class="p">),</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-0-56" name="__codelineno-0-56"></a>
+<a id="__codelineno-0-57" name="__codelineno-0-57"></a>            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">append_loc</span><span class="p">:</span>
+<a id="__codelineno-0-58" name="__codelineno-0-58"></a>                <span class="n">samples</span> <span class="o">=</span> <span class="n">samples</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:,</span> <span class="mi">0</span><span class="p">]</span> 
+<a id="__codelineno-0-59" name="__codelineno-0-59"></a>            <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-0-60" name="__codelineno-0-60"></a>                <span class="n">samples</span> <span class="o">=</span> <span class="n">samples</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># n x 784</span>
+<a id="__codelineno-0-61" name="__codelineno-0-61"></a>            <span class="n">samples</span> <span class="o">=</span> <span class="n">samples</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">input_shape</span><span class="p">)</span>
+<a id="__codelineno-0-62" name="__codelineno-0-62"></a>            <span class="k">return</span> <span class="n">samples</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>字符生成结果如下</li>
+</ul>
+<p><center> <figure> 
+    <img src="fig/fig2/fig3_1.png"  style="zoom:50%" />
+    <img src="fig/fig2/fig3_2.png" style="zoom:50%"/> 
+    <img src="fig/fig2/fig3_3.png" style="zoom:50%"/> 
+    <img src="fig/fig2/fig3_4.png" style="zoom:50%"/> 
+    <img src="fig/fig2/fig3_5.png" style="zoom:50%"/> 
+    </figure> </center>
+<center>epoch 0 1 3 9 20采样结果</p>
+<ul>
+<li>输入输出序列加入坐标编码时，字符生成结果如下</li>
+</ul>
+<p><center> <figure> 
+     <img src="fig/fig2/fig4_0.png" style="zoom:50%"/> 
+    <img src="fig/fig2/fig4_1.png"  style="zoom:50%" />
+    <img src="fig/fig2/fig4_2.png" style="zoom:50%"/> 
+    <img src="fig/fig2/fig4_3.png" style="zoom:50%"/> 
+    <img src="fig/fig2/fig4_4.png" style="zoom:50%"/> 
+    </figure> </center></p>
+<p><center>epoch 0 1 3 9 20采样结果</p>
+<h4 id="44-textcolorbluemade-带有mask的自编码器">4.4  <span class="arithmatex">\(\textcolor{blue}{MADE}\)</span>: 带有mask的自编码器<a class="headerlink" href="#44-textcolorbluemade-带有mask的自编码器" title="Permanent link"></a></h4>
+<p><center> <figure> 
+    <img src="fig/fig2/fig5.png"  style="zoom:40%" />
+    </figure> </center>
+<center>masked autoencoder for distribution estimation</p>
+<ul>
+<li>
+<p>每层的输出神经元只与数字比它低或者相等的前一层连接(二值化的mask)，保证概率的chain rule.</p>
+</li>
+<li>
+<p>例：上图<span class="arithmatex">\(p(x_3|x_2)\)</span>被标记为2，只与前一层被标记为1的层连接，依次溯源到输入，这一项只与<span class="arithmatex">\(x_2\)</span>有关，而与<span class="arithmatex">\(x_1,x_3\)</span>无关。同理<span class="arithmatex">\(p(x_1|x_2,x_3)\)</span>溯源到输入只与<span class="arithmatex">\(x_2,x_3\)</span>有关</p>
+</li>
+<li>模型代码</li>
+</ul>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-1-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-1-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-1-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-1-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-1-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-1-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-1-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-1-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-1-10">10</a></span>
+<span class="normal"><a href="#__codelineno-1-11">11</a></span>
+<span class="normal"><a href="#__codelineno-1-12">12</a></span>
+<span class="normal"><a href="#__codelineno-1-13">13</a></span>
+<span class="normal"><a href="#__codelineno-1-14">14</a></span>
+<span class="normal"><a href="#__codelineno-1-15">15</a></span>
+<span class="normal"><a href="#__codelineno-1-16">16</a></span>
+<span class="normal"><a href="#__codelineno-1-17">17</a></span>
+<span class="normal"><a href="#__codelineno-1-18">18</a></span>
+<span class="normal"><a href="#__codelineno-1-19">19</a></span>
+<span class="normal"><a href="#__codelineno-1-20">20</a></span>
+<span class="normal"><a href="#__codelineno-1-21">21</a></span>
+<span class="normal"><a href="#__codelineno-1-22">22</a></span>
+<span class="normal"><a href="#__codelineno-1-23">23</a></span>
+<span class="normal"><a href="#__codelineno-1-24">24</a></span>
+<span class="normal"><a href="#__codelineno-1-25">25</a></span>
+<span class="normal"><a href="#__codelineno-1-26">26</a></span>
+<span class="normal"><a href="#__codelineno-1-27">27</a></span>
+<span class="normal"><a href="#__codelineno-1-28">28</a></span>
+<span class="normal"><a href="#__codelineno-1-29">29</a></span>
+<span class="normal"><a href="#__codelineno-1-30">30</a></span>
+<span class="normal"><a href="#__codelineno-1-31">31</a></span>
+<span class="normal"><a href="#__codelineno-1-32">32</a></span>
+<span class="normal"><a href="#__codelineno-1-33">33</a></span>
+<span class="normal"><a href="#__codelineno-1-34">34</a></span>
+<span class="normal"><a href="#__codelineno-1-35">35</a></span>
+<span class="normal"><a href="#__codelineno-1-36">36</a></span>
+<span class="normal"><a href="#__codelineno-1-37">37</a></span>
+<span class="normal"><a href="#__codelineno-1-38">38</a></span>
+<span class="normal"><a href="#__codelineno-1-39">39</a></span>
+<span class="normal"><a href="#__codelineno-1-40">40</a></span>
+<span class="normal"><a href="#__codelineno-1-41">41</a></span>
+<span class="normal"><a href="#__codelineno-1-42">42</a></span>
+<span class="normal"><a href="#__codelineno-1-43">43</a></span>
+<span class="normal"><a href="#__codelineno-1-44">44</a></span>
+<span class="normal"><a href="#__codelineno-1-45">45</a></span>
+<span class="normal"><a href="#__codelineno-1-46">46</a></span>
+<span class="normal"><a href="#__codelineno-1-47">47</a></span>
+<span class="normal"><a href="#__codelineno-1-48">48</a></span>
+<span class="normal"><a href="#__codelineno-1-49">49</a></span>
+<span class="normal"><a href="#__codelineno-1-50">50</a></span>
+<span class="normal"><a href="#__codelineno-1-51">51</a></span>
+<span class="normal"><a href="#__codelineno-1-52">52</a></span>
+<span class="normal"><a href="#__codelineno-1-53">53</a></span>
+<span class="normal"><a href="#__codelineno-1-54">54</a></span>
+<span class="normal"><a href="#__codelineno-1-55">55</a></span>
+<span class="normal"><a href="#__codelineno-1-56">56</a></span>
+<span class="normal"><a href="#__codelineno-1-57">57</a></span>
+<span class="normal"><a href="#__codelineno-1-58">58</a></span>
+<span class="normal"><a href="#__codelineno-1-59">59</a></span>
+<span class="normal"><a href="#__codelineno-1-60">60</a></span>
+<span class="normal"><a href="#__codelineno-1-61">61</a></span>
+<span class="normal"><a href="#__codelineno-1-62">62</a></span>
+<span class="normal"><a href="#__codelineno-1-63">63</a></span>
+<span class="normal"><a href="#__codelineno-1-64">64</a></span>
+<span class="normal"><a href="#__codelineno-1-65">65</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="k">class</span> <span class="nc">MaskedLinear</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">):</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot; 带有mask的全连接层 &quot;&quot;&quot;</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">in_features</span><span class="p">,</span> <span class="n">out_features</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4"></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">in_features</span><span class="p">,</span> <span class="n">out_features</span><span class="p">,</span> <span class="n">bias</span><span class="p">)</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">register_buffer</span><span class="p">(</span><span class="s1">&#39;mask&#39;</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">out_features</span><span class="p">,</span> <span class="n">in_features</span><span class="p">))</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6"></a>
+<a id="__codelineno-1-7" name="__codelineno-1-7"></a>    <span class="k">def</span> <span class="nf">set_mask</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mask</span><span class="p">):</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">mask</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">copy_</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">mask</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">))</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9"></a>
+<a id="__codelineno-1-10" name="__codelineno-1-10"></a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">):</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11"></a>        <span class="k">return</span> <span class="n">F</span><span class="o">.</span><span class="n">linear</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mask</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">weight</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">bias</span><span class="p">)</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12"></a>
+<a id="__codelineno-1-13" name="__codelineno-1-13"></a><span class="k">class</span> <span class="nc">MADE_Example</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14"></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="p">):</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15"></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">nin</span> <span class="o">=</span> <span class="mi">784</span>
+<a id="__codelineno-1-17" name="__codelineno-1-17"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">nout</span> <span class="o">=</span> <span class="mi">784</span>
+<a id="__codelineno-1-18" name="__codelineno-1-18"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">hidden_sizes</span> <span class="o">=</span> <span class="p">[</span><span class="mi">512</span><span class="p">,</span> <span class="mi">512</span><span class="p">,</span> <span class="mi">512</span><span class="p">]</span>
+<a id="__codelineno-1-19" name="__codelineno-1-19"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">device</span>
+<a id="__codelineno-1-20" name="__codelineno-1-20"></a>
+<a id="__codelineno-1-21" name="__codelineno-1-21"></a>        <span class="c1"># 定义网络结构</span>
+<a id="__codelineno-1-22" name="__codelineno-1-22"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">net</span> <span class="o">=</span> <span class="p">[]</span>
+<a id="__codelineno-1-23" name="__codelineno-1-23"></a>        <span class="n">hs</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">nin</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">hidden_sizes</span> <span class="o">+</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">nout</span><span class="p">]</span>
+<a id="__codelineno-1-24" name="__codelineno-1-24"></a>        <span class="k">for</span> <span class="n">h0</span><span class="p">,</span> <span class="n">h1</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">hs</span><span class="p">,</span> <span class="n">hs</span><span class="p">[</span><span class="mi">1</span><span class="p">:]):</span>
+<a id="__codelineno-1-25" name="__codelineno-1-25"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">net</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span>
+<a id="__codelineno-1-26" name="__codelineno-1-26"></a>                <span class="n">MaskedLinear</span><span class="p">(</span><span class="n">h0</span><span class="p">,</span> <span class="n">h1</span><span class="p">),</span>
+<a id="__codelineno-1-27" name="__codelineno-1-27"></a>                <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
+<a id="__codelineno-1-28" name="__codelineno-1-28"></a>            <span class="p">])</span>
+<a id="__codelineno-1-29" name="__codelineno-1-29"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">net</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>  
+<a id="__codelineno-1-30" name="__codelineno-1-30"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">net</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">net</span><span class="p">)</span>
+<a id="__codelineno-1-31" name="__codelineno-1-31"></a>
+<a id="__codelineno-1-32" name="__codelineno-1-32"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">m</span> <span class="o">=</span> <span class="p">{}</span>
+<a id="__codelineno-1-33" name="__codelineno-1-33"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">create_mask</span><span class="p">()</span>  <span class="c1"># 建立初始连接，带mask</span>
+<a id="__codelineno-1-34" name="__codelineno-1-34"></a>
+<a id="__codelineno-1-35" name="__codelineno-1-35"></a>    <span class="k">def</span> <span class="nf">create_mask</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-1-36" name="__codelineno-1-36"></a>        <span class="n">L</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hidden_sizes</span><span class="p">)</span>
+<a id="__codelineno-1-37" name="__codelineno-1-37"></a>
+<a id="__codelineno-1-38" name="__codelineno-1-38"></a>        <span class="c1"># 采样生成每个神经元的标号</span>
+<a id="__codelineno-1-39" name="__codelineno-1-39"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">m</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nin</span><span class="p">)</span>
+<a id="__codelineno-1-40" name="__codelineno-1-40"></a>        <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">L</span><span class="p">):</span>
+<a id="__codelineno-1-41" name="__codelineno-1-41"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">m</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">m</span><span class="p">[</span><span class="n">l</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">nin</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hidden_sizes</span><span class="p">[</span><span class="n">l</span><span class="p">])</span>
+<a id="__codelineno-1-42" name="__codelineno-1-42"></a>
+<a id="__codelineno-1-43" name="__codelineno-1-43"></a>        <span class="c1"># 构建mask矩阵</span>
+<a id="__codelineno-1-44" name="__codelineno-1-44"></a>        <span class="n">masks</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">m</span><span class="p">[</span><span class="n">l</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">m</span><span class="p">[</span><span class="n">l</span><span class="p">][</span><span class="kc">None</span><span class="p">,</span> <span class="p">:]</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">L</span><span class="p">)]</span>
+<a id="__codelineno-1-45" name="__codelineno-1-45"></a>        <span class="n">masks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">m</span><span class="p">[</span><span class="n">L</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">m</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="kc">None</span><span class="p">,</span> <span class="p">:])</span>
+<a id="__codelineno-1-46" name="__codelineno-1-46"></a>
+<a id="__codelineno-1-47" name="__codelineno-1-47"></a>        <span class="c1"># 将mask应用于全连接网络</span>
+<a id="__codelineno-1-48" name="__codelineno-1-48"></a>        <span class="n">layers</span> <span class="o">=</span> <span class="p">[</span><span class="n">l</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">net</span><span class="o">.</span><span class="n">modules</span><span class="p">()</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">MaskedLinear</span><span class="p">)]</span>
+<a id="__codelineno-1-49" name="__codelineno-1-49"></a>        <span class="k">for</span> <span class="n">l</span><span class="p">,</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">layers</span><span class="p">,</span> <span class="n">masks</span><span class="p">):</span>
+<a id="__codelineno-1-50" name="__codelineno-1-50"></a>            <span class="n">l</span><span class="o">.</span><span class="n">set_mask</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+<a id="__codelineno-1-51" name="__codelineno-1-51"></a>
+<a id="__codelineno-1-52" name="__codelineno-1-52"></a>    <span class="k">def</span> <span class="nf">nll</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+<a id="__codelineno-1-53" name="__codelineno-1-53"></a>        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">784</span><span class="p">)</span> 
+<a id="__codelineno-1-54" name="__codelineno-1-54"></a>        <span class="n">logits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">net</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<a id="__codelineno-1-55" name="__codelineno-1-55"></a>        <span class="k">return</span> <span class="n">F</span><span class="o">.</span><span class="n">binary_cross_entropy_with_logits</span><span class="p">(</span><span class="n">logits</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+<a id="__codelineno-1-56" name="__codelineno-1-56"></a>
+<a id="__codelineno-1-57" name="__codelineno-1-57"></a>    <span class="k">def</span> <span class="nf">sample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+<a id="__codelineno-1-58" name="__codelineno-1-58"></a>        <span class="n">samples</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="mi">784</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+<a id="__codelineno-1-59" name="__codelineno-1-59"></a>        <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+<a id="__codelineno-1-60" name="__codelineno-1-60"></a>            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">784</span><span class="p">):</span>
+<a id="__codelineno-1-61" name="__codelineno-1-61"></a>                <span class="n">logits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">net</span><span class="p">(</span><span class="n">samples</span><span class="p">)[:,</span> <span class="n">i</span><span class="p">]</span>
+<a id="__codelineno-1-62" name="__codelineno-1-62"></a>                <span class="n">probs</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="n">logits</span><span class="p">)</span>
+<a id="__codelineno-1-63" name="__codelineno-1-63"></a>                <span class="n">samples</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">bernoulli</span><span class="p">(</span><span class="n">probs</span><span class="p">)</span>
+<a id="__codelineno-1-64" name="__codelineno-1-64"></a>            <span class="n">samples</span> <span class="o">=</span> <span class="n">samples</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">)</span>
+<a id="__codelineno-1-65" name="__codelineno-1-65"></a>        <span class="k">return</span> <span class="n">samples</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>生成结果</li>
+</ul>
+<p><center> <figure> 
+    <img src="fig/fig2/fig6.png"  style="zoom:60%" />
+    </figure> </center>
+<center>MADE生成结果(左)与生成结果最接近的MNIST图片(右)</p>
+<h4 id="45-wavenet-带有mask的1d卷积">4.5 Wavenet: 带有mask的1D卷积<a class="headerlink" href="#45-wavenet-带有mask的1d卷积" title="Permanent link"></a></h4>
+<ul>
+<li>语音信号采样率高，自回归模型计算效率低</li>
+<li>传统卷积感受野受限，为了扩大感受野，在Wavenet上使用扩张卷积，浅层即可捕获较长段输入序列</li>
+<li>输出作为下一时刻输入</li>
+</ul>
+<p><img src="fig/fig2/fig7.gif" style='zoom:80%'/></p>
+<p><center>Wavenet中的扩张卷积</p>
+<ul>
+<li>
+<p>Wavenet网络结构上还对输出进行了类似LSTM中的门控操作(下图的<span class="arithmatex">\(\sigma\)</span>与tanh输出相乘)</p>
+</li>
+<li>
+<p>使用中间层结果相加，后经过1×1卷积层作为输出</p>
+</li>
+</ul>
+<p><center> 
+      <img src="fig/fig2/fig8.png"  style="zoom:60%" />
+  <center>Wavenet 结构</p>
+<ul>
+<li>
+<p>生成结果如下(输入不包括位置编码)：</p>
+</li>
+<li>
+<p>生成结果很差</p>
+</li>
+</ul>
+<p><center> <figure> 
+     <img src="fig/fig2/fig9_0.png" style="zoom:50%"/> 
+    <img src="fig/fig2/fig9_1.png"  style="zoom:50%" />
+    <img src="fig/fig2/fig9_2.png" style="zoom:50%"/> 
+    <img src="fig/fig2/fig9_3.png" style="zoom:50%"/> 
+    <img src="fig/fig2/fig9_4.png" style="zoom:50%"/> 
+    </figure> </center>
+<center>epoch 0 1 3 9 20采样结果</p>
+<ul>
+<li>生成结果如下(输入包括位置编码)：</li>
+</ul>
+<p><center> <figure> 
+    <img src="fig/fig2/fig10_1.png"  style="zoom:50%" />
+    <img src="fig/fig2/fig10_2.png" style="zoom:50%"/> 
+    <img src="fig/fig2/fig10_3.png" style="zoom:50%"/> 
+    <img src="fig/fig2/fig10_4.png" style="zoom:50%"/> 
+     <img src="fig/fig2/fig10_5.png" style="zoom:50%"/> 
+    </figure> </center>
+<center>epoch 0 1 3 9 20采样结果</p>
+<h4 id="46-pixelcnn-带有mask的2d卷积">4.6 PixelCNN: 带有mask的2D卷积<a class="headerlink" href="#46-pixelcnn-带有mask的2d卷积" title="Permanent link"></a></h4>
+<ul>
+<li>2D自回归，光栅式扫描</li>
+</ul>
+<p><center> 
+    <img src="fig/fig2/fig11.png"  style="zoom:80%" />
+<center>2D自回归(像素级)</p>
+<ul>
+<li>卷积核上使用mask，使得预测像素之于之前产生的像素有关</li>
+</ul>
+<p><center><img src="fig/fig2/fig12.png"  style="zoom:60%" />
+         <img src="fig/fig2/fig13.png"  style="zoom:100%" /><br>
+    卷积核上的掩膜</p>
+<ul>
+<li>上述mask感受野有盲点</li>
+</ul>
+<p><center><img src="fig/fig2/fig14.png"  style="zoom:60%" />
+      <center>上图mask无法采集图像右下方的像素
+              <center>颜色由深到浅表示感受野随着层数叠加的增长方式</p>
+<ul>
+<li>
+<p>GatedPixelCNN解决盲点问题</p>
+</li>
+<li>
+<p>垂直叠加：当前预测点感受野为上侧所有行</p>
+</li>
+<li>水平叠加：当前预测点感受野为左侧所有点</li>
+<li>垂直网络中的特征会被融合到水平网络中</li>
+<li>Pixel CNN网络也使用了类似Wavenet中用到的门控结构、残差连接和1×1卷积</li>
+</ul>
+<p><center><img src="fig/fig2/fig15.png"  style="zoom:50%" />
+      <center>无盲点感受野增长方式</p>
+<h3 id="5-attention注意力">5 Attention注意力<a class="headerlink" href="#5-attention注意力" title="Permanent link"></a></h3>
+<ul>
+<li>
+<p>CNN缺点是感受野受限，RNN缺点难以捕获数据中的远距离关系</p>
+</li>
+<li>
+<p>新的模型：自注意力Self-Attention</p>
+</li>
+<li>
+<p>无限制的感受野/在某个神经元上接收整个数据样本</p>
+</li>
+<li>
+<p>并行计算(相比RNN)</p>
+</li>
+<li>
+<p>卷积是层与层之间局部连接，自注意力是让神经网络学习下一层神经元应该更多关注上一次的哪些位置</p>
+<p><center><img src="fig/fig2/fig17.png"  style="zoom:40%" />
+    <br>卷积(左)与自注意力(右)</p>
+</li>
+<li>
+<p>自注意力计算方式</p>
+<ul>
+<li>对于输入序列的每个位置，用nn前向计算产生q,k,v三个向量，分别叫做query, key, value；</li>
+<li>计算query与key的某种相似性度量，这里是计算內积，结果值越大表示越相关；</li>
+<li>对上一步內积结果进行softmax操作，使相关性的度量归一化；</li>
+<li>使用上一步归一化后的权重对value加权求和。</li>
+</ul>
+</li>
+<li>解释：使用nn计算出了原本nn模型参数上的权重，完成了所谓的注意力。让模型自动去关注输入序列的哪些位置是有关联的。</li>
+<li>同层同位置有多个key, qurey, value时，称为多头自注意力</li>
+</ul>
+<p><center><img src="fig/fig2/fig16.png"  style="zoom:30%" /><br>
+自注意力计算方式</p>
+<ul>
+<li>感受野对比，Self-Attention使用较少层即可获得较大感受野</li>
+</ul>
+<p><center><img src="fig/fig2/image128.png"  style="zoom:50%" />
+          <img src="fig/fig2/image129.png"  style="zoom:50%" />
+          <img src="fig/fig2/image130.png"  style="zoom:50%" /><br>
+     <center> GatedPixelCNN, PixelCNN++, Self-Attention感受野</p>
+<h3 id="6-自回归模型的发展">6 自回归模型的发展<a class="headerlink" href="#6-自回归模型的发展" title="Permanent link"></a></h3>
+<ul>
+<li>提升生成数据质量</li>
+<li>有条件的生成某类数据</li>
+<li>应用：超分辨率，着色</li>
+<li>提升采样速度</li>
+<li>缓存中间计算结果</li>
+<li>
+<p>数据分组采样(非完全自回归)</p>
+</li>
+<li>
+<p>获取自回归模型中数据的潜在表示(Fisher分数)</p>
+</li>
+</ul>
+
+
+
+
+
+
+
+  
+    
+  
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Last update">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2024-11-04</span>
+  </span>
+
+    
+    
+    
+    
+  </aside>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/j-yi-11" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://space.bilibili.com/2141031639?spm_id_from=333.1007.0.0" target="_blank" rel="noopener" title="space.bilibili.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M488.6 104.1c16.7 18.1 24.4 39.7 23.3 65.7v202.4c-.4 26.4-9.2 48.1-26.5 65.1-17.2 17-39.1 25.9-65.5 26.7H92.02c-26.45-.8-48.21-9.8-65.28-27.2C9.682 419.4.767 396.5 0 368.2V169.8c.767-26 9.682-47.6 26.74-65.7C43.81 87.75 65.57 78.77 92.02 78h29.38L96.05 52.19c-5.75-5.73-8.63-13-8.63-21.79 0-8.8 2.88-16.06 8.63-21.797C101.8 2.868 109.1 0 117.9 0q13.2 0 21.9 8.603L213.1 78h88l74.5-69.397C381.7 2.868 389.2 0 398 0q13.2 0 21.9 8.603c5.7 5.737 8.6 12.997 8.6 21.797 0 8.79-2.9 16.06-8.6 21.79L394.6 78h29.3c26.4.77 48 9.75 64.7 26.1m-38.8 69.7c-.4-9.6-3.7-17.4-10.7-23.5-5.2-6.1-14-9.4-22.7-9.8H96.05c-9.59.4-17.45 3.7-23.58 9.8-6.14 6.1-9.4 13.9-9.78 23.5v194.4c0 9.2 3.26 17 9.78 23.5s14.38 9.8 23.58 9.8H416.4c9.2 0 17-3.3 23.3-9.8s9.7-14.3 10.1-23.5zm-264.3 42.7c6.3 6.3 9.7 14.1 10.1 23.2V273c-.4 9.2-3.7 16.9-9.8 23.2-6.2 6.3-14 9.5-23.6 9.5s-17.5-3.2-23.6-9.5-9.4-14-9.8-23.2v-33.3c.4-9.1 3.8-16.9 10.1-23.2s13.2-9.6 23.3-10c9.2.4 17 3.7 23.3 10m191.5 0c6.3 6.3 9.7 14.1 10.1 23.2V273c-.4 9.2-3.7 16.9-9.8 23.2s-14 9.5-23.6 9.5-17.4-3.2-23.6-9.5c-7-6.3-9.4-14-9.7-23.2v-33.3c.3-9.1 3.7-16.9 10-23.2s14.1-9.6 23.3-10c9.2.4 17 3.7 23.3 10"/></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="mailto:<qinfenglanyue@gmail.com>" target="_blank" rel="noopener" title="" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M498.1 5.6c10.1 7 15.4 19.1 13.5 31.2l-64 416c-1.5 9.7-7.4 18.2-16 23s-18.9 5.4-28 1.6L284 427.7l-68.5 74.1c-8.9 9.7-22.9 12.9-35.2 8.1S160 493.2 160 480v-83.6c0-4 1.5-7.8 4.2-10.8l167.6-182.8c5.8-6.3 5.6-16-.4-22s-15.7-6.4-22-.7L106 360.8l-88.3-44.2C7.1 311.3.3 300.7 0 288.9s5.9-22.8 16.1-28.7l448-256c10.7-6.1 23.9-5.5 34 1.4"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.top", "search.suggest", "search.highlight", "navigation.expand", "search.share"], "search": "../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.56dfad97.min.js"></script>
+      
+        <script src="../javascripts/extra.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../ckplayer/js/ckplayer.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/gitalk@latest/dist/gitalk.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mermaid@10.0.2/dist/add-html-label-6e56ed67.min.js"></script>
+      
+    
+  </body>
+</html>

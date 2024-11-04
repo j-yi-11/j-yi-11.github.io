@@ -30,22 +30,18 @@ theme:
 nav:
   - Home: index.md     # 主页链接
   - Blog:              # 博客链接
-    - Blogger:       # 在导航栏显示为 'Blogger'
-      - index: blog/index.md  # 博客主页指向 blog/index.md 文件
+    - index: blog/index.md  # 博客主页指向 blog/index.md 文件
   - Develop:
     - Markdown: develop/markdown.md
-    # - Latex:
-    #   - index: null
-    # - Python:
-    #   - index: null
-    # - C++:
-    #   - index: null
-    # - MATLAB:
-    #   - index: null
-    # - Java:
-    #   - index: null
-    # - RISC-V:
-    #   - index: null
+    - Latex: develop/latex.md
+    - Python: develop/python.md
+    - C++: develop/c++.md
+    - MATLAB: develop/matlab.md
+    - Java: develop/java.md
+  - Deep Learning:
+    - AutoRegressiveModel: deeplearning/Autoregressive model.md
+  - Paper Reading:
+    - MimicTalk: paper-reading/MimicTalk.md
     
 markdown_extensions:
   - abbr
@@ -54,7 +50,7 @@ markdown_extensions:
   - def_list
   - footnotes
   - md_in_html
-  - meta # 支持Markdown文件上方自定义标题标签等
+  # - meta # 支持Markdown文件上方自定义标题标签等
   - pymdownx.caret
   - pymdownx.betterem
   - pymdownx.critic
@@ -148,8 +144,8 @@ plugins:
         # - about/link.md
   - blog:
       # post_date_format: full #时间
-      draft: true
-      draft_if_future_date: true #自动将具有未来日期的帖子标记为草稿
+      draft: false
+      # draft_if_future_date: true #自动将具有未来日期的帖子标记为草稿
       post_readtime: false
       # post_readtime_words_per_minute: 265  #计算帖子的阅读时间时读者每分钟预计阅读的字数
       post_url_format: "{date}/{slug}"
