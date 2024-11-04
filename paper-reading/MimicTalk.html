@@ -1227,11 +1227,11 @@
 <p>音频-动作流匹配模型</p>
 </li>
 </ol>
-<p>​        为了更好地<strong>生成expressive facial motion</strong>，本文利用<strong>流匹配</strong>的方式，模型的参数是transformer <span class="arithmatex">\(\theta\)</span>，预测的流场<span class="arithmatex">\(\phi\)</span>储存某个点<span class="arithmatex">\(x_t\)</span>指向目标分布的速度<span class="arithmatex">\(v_t=\frac{dx_t}{dt}\)</span>。时间步<span class="arithmatex">\(t\)</span>在inference的阶段会从0逐渐变到1。</p>
+<p>为了更好地<strong>生成expressive facial motion</strong>，本文利用<strong>流匹配</strong>的方式，模型的参数是transformer <span class="arithmatex">\(\theta\)</span>，预测的流场<span class="arithmatex">\(\phi\)</span>储存某个点<span class="arithmatex">\(x_t\)</span>指向目标分布的速度<span class="arithmatex">\(v_t=\frac{dx_t}{dt}\)</span>。时间步<span class="arithmatex">\(t\)</span>在inference的阶段会从0逐渐变到1。</p>
 <blockquote>
 <p>先验数据点<span class="arithmatex">\(x_0 \sim \mathcal{N}(0,I)\)</span>，目标数据点<span class="arithmatex">\(x_1 \sim q(x)\)</span>，<span class="arithmatex">\(q(x)\)</span>是实际的目标分布/ground truth。</p>
 </blockquote>
-<p>​        模型的输入是风格提示<span class="arithmatex">\(s\)</span>、音频条件<span class="arithmatex">\(a\)</span>和噪声运动<span class="arithmatex">\(x_t\)</span>。模型的输出是噪声运动<span class="arithmatex">\(x_t\)</span>对应的速度<span class="arithmatex">\(v_t(x,a,s;\theta)\)</span>。利用条件流匹配目标/CFM来训练：<span class="arithmatex">\(\mathcal{L}_{CFM}=\mathbf{E}_{t,q(x),p(x|x_1)}||u_t(x|x_1)−v_t(x,a,s;\theta)||^2_2\)</span>。这个目标旨在最小化ground truth速度<span class="arithmatex">\(u_t(x|x_1)\)</span>（从<span class="arithmatex">\(x_t\)</span>到<span class="arithmatex">\(x_1\)</span>的唯一的最优传输路径）与模型预测结果速度<span class="arithmatex">\(v_t(x,a,s;\theta)\)</span>之间的差距。</p>
+<p>模型的输入是风格提示<span class="arithmatex">\(s\)</span>、音频条件<span class="arithmatex">\(a\)</span>和噪声运动<span class="arithmatex">\(x_t\)</span>。模型的输出是噪声运动<span class="arithmatex">\(x_t\)</span>对应的速度<span class="arithmatex">\(v_t(x,a,s;\theta)\)</span>。利用条件流匹配目标/CFM来训练：<span class="arithmatex">\(\mathcal{L}_{CFM}=\mathbf{E}_{t,q(x),p(x|x_1)}||u_t(x|x_1)−v_t(x,a,s;\theta)||^2_2\)</span>。这个目标旨在最小化ground truth速度<span class="arithmatex">\(u_t(x|x_1)\)</span>（从<span class="arithmatex">\(x_t\)</span>到<span class="arithmatex">\(x_1\)</span>的唯一的最优传输路径）与模型预测结果速度<span class="arithmatex">\(v_t(x,a,s;\theta)\)</span>之间的差距。</p>
 <blockquote>
 <p>流匹配的方法，之前很少见过。</p>
 </blockquote>
@@ -1247,7 +1247,7 @@
 <ol>
 <li>增强风格模仿的无分类指导</li>
 </ol>
-<p>无分类器引导（CFG）是一种流行的推理方法，它可以在条件扩散模型的采样过程中操纵条件强度。CFG 已成为文本到图像 Rombach 等人（2021 年）和其他弱条件生成任务的标准技术，而我们发现它也有助于提高我们的风格化音频到运动模型的风格模仿质量。具体来说，我们将有/无风格提示的两种网络预测混合起来，以构建 CFG 速度 </p>
+<p>无分类器引导/CFG在扩散模型采样过程中操纵条件强度，也助于<strong>提高风格化音频到运动模型风格模仿质量</strong>。本文将有/无风格提示的网络预测混合构建CFG速度<span class="arithmatex">\(v_t^{CFG}=v_t(x,a,s;\theta)+\omega (v_t(x,a,s;\theta)-v_t(x,a,0;\theta))\)</span></p>
 
 
 
