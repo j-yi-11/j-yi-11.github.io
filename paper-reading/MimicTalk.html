@@ -1209,7 +1209,8 @@
 <blockquote>
 <p>考虑到目标人物视频的模型容量大、数据规模小，直接微调整个大模型/模型后面几层会有问题，如 GPU 内存占用大、训练不稳定和灾难性遗忘等。LoRA适合于对大模型进行微调，最近用的也比较多。通过只更新LoRA的方式，可以起到很好的效果。</p>
 </blockquote>
-<p>整个过程的formula为：<span class="arithmatex">\(<span class="arithmatex">\(I_{pred}=\text{SuperResolution}(\text{VolumeRenderer}⁢(P_{cano}^*+\text{MotionAdapter}⁢([PNCC_{src},PNCC_{tgt}],\theta_1^*),cam_{tgt},\theta_2^*),\theta_3^*)\)</span>\)</span>。</p>
+<p>整个过程的formula为：</p>
+<p><span class="arithmatex">\(<span class="arithmatex">\(I_{pred}=\text{SuperResolution}(\text{VolumeRenderer}⁢(P_{cano}^*+\text{MotionAdapter}⁢([PNCC_{src},PNCC_{tgt}],\theta_1^*),cam_{tgt},\theta_2^*),\theta_3^*)\)</span>\)</span>。</p>
 <p>在训练过程中，取目标人物的一小段视频切片当做训练数据，去更新<span class="arithmatex">\(P_{cano}^*\)</span>和<span class="arithmatex">\(\theta_1^*\)</span>，<span class="arithmatex">\(\theta_2^*\)</span>，<span class="arithmatex">\(\theta_3^*\)</span>。</p>
 <p>损失函数考虑了：L1损失<span class="arithmatex">\(\mathcal{L}_1\)</span>，LPIPS损失<span class="arithmatex">\(\mathcal{L}_{LPIPS}\)</span>，ID损失<span class="arithmatex">\(\mathcal{L}_{ID}\)</span>，最后这三者进行线性组合。</p>
 <blockquote>
@@ -1217,17 +1218,21 @@
 </blockquote>
 <h3 id="in-context-stylized-audio-to-motion">In-Context Stylized Audio-to-Motion<a class="headerlink" href="#in-context-stylized-audio-to-motion" title="Permanent link"></a></h3>
 <p>以上各节中组成统一的运动条件说话脸部生成框架。这一节的上下文风格化音频-动作（ICS-A2M）模型，为<strong>音频驱动的场景</strong>生成个性化的面部动作，具体包括：</p>
-<ol>
-<li>音频引导的动作填充任务
-   受LLM和文本到语音合成中<strong>上下文学习方法</strong>启发，本文设计音频引导的运动填充任务：音频和动作对在时间上进行对齐，在信道上进行串联，并由音频-动作模型进行处理。</li>
-<li><strong>训练</strong>过程中<strong>随机</strong>屏蔽动作轨迹中的几个片段，并利用屏蔽片段上的<strong>运动重建误差</strong>对模型进行训练。由于该模型<strong>可获得</strong>之前/之后段未屏蔽的运动和完整的音轨，因此它<strong>能学会</strong>利用运动上下文中的说话方式来更准确地预测被屏蔽的共同语音运动。</li>
+<ul>
+<li>
+<p>音频引导的动作填充任务
+  受LLM和文本到语音合成中<strong>上下文学习方法</strong>启发，本文设计音频引导的运动填充任务：音频和动作对在时间上进行对齐，在信道上进行串联，并由音频-动作模型进行处理。</p>
+</li>
+<li>
+<p><strong>训练</strong>过程中<strong>随机</strong>屏蔽动作轨迹中的几个片段，并利用屏蔽片段上的<strong>运动重建误差</strong>对模型进行训练。由于该模型<strong>可获得</strong>之前/之后段未屏蔽的运动和完整的音轨，因此它<strong>能学会</strong>利用运动上下文中的说话方式来更准确地预测被屏蔽的共同语音运动。</p>
+</li>
 <li>
 <p><strong>推理</strong>过程中将参考音频-动作对作为说话方式提示，将任意的驱动音频作为条件，将预测动作的噪声占位符作为模型的输入。这样，模型就能根据风格提示中提供的说话风格预测与音频同步的面部动作。</p>
 </li>
 <li>
 <p>音频-动作流匹配模型</p>
 </li>
-</ol>
+</ul>
 <p>为了更好地<strong>生成expressive facial motion</strong>，本文利用<strong>流匹配</strong>的方式，模型的参数是transformer <span class="arithmatex">\(\theta\)</span>，预测的流场<span class="arithmatex">\(\phi\)</span>储存某个点<span class="arithmatex">\(x_t\)</span>指向目标分布的速度<span class="arithmatex">\(v_t=\frac{dx_t}{dt}\)</span>。时间步<span class="arithmatex">\(t\)</span>在inference的阶段会从0逐渐变到1。</p>
 <blockquote>
 <p>先验数据点<span class="arithmatex">\(x_0 \sim \mathcal{N}(0,I)\)</span>，目标数据点<span class="arithmatex">\(x_1 \sim q(x)\)</span>，<span class="arithmatex">\(q(x)\)</span>是实际的目标分布/ground truth。</p>
@@ -1236,18 +1241,14 @@
 <blockquote>
 <p>流匹配的方法，之前很少见过。</p>
 </blockquote>
-<p>除了条件流匹配目标外，本文在去噪样本<span class="arithmatex">\(x_1\)</span>上添加<strong>唇音</strong>损失，以生成准确的面部动作。首先求解ODE 问题：
-   $$
-   \frac{dx_t}{dt}=u_t\approx v_t(x_t,\theta), s.t. x_0\sim p(x), t\in [0,1]
-   $$</p>
-<p>求解得到的速度<span class="arithmatex">\(v_t(x,a,s;\theta)\)</span>获得预测的样本<span class="arithmatex">\(\hat{x_1}\)</span>，把<span class="arithmatex">\(\hat{x_1}\)</span>输入到SyncNet获得判别同步损失<span class="arithmatex">\(\mathcal{L}_{sync}\)</span>。</p>
-<blockquote>
-<p>唇音损失是额外对嘴唇进行调整的。</p>
-</blockquote>
-<p>最后总的损失就是<span class="arithmatex">\(\mathcal{L}_{CFM}\)</span>与<span class="arithmatex">\(\mathcal{L}_{sync}\)</span>线性组合。</p>
-<ol>
+<p>除了条件流匹配目标外，本文在去噪样本<span class="arithmatex">\(x_1\)</span>上添加<strong>唇音</strong>损失，以生成准确的面部动作。首先求解ODE 问题：</p>
+<div class="arithmatex">\[
+\frac{dx_t}{dt}=u_t\approx v_t(x_t,\theta), s.t. x_0\sim p(x), t\in [0,1]
+\]</div>
+<p>​       求解得到的速度<span class="arithmatex">\(v_t(x,a,s;\theta)\)</span>获得预测的样本<span class="arithmatex">\(\hat{x_1}\)</span>，把<span class="arithmatex">\(\hat{x_1}\)</span>输入到SyncNet获得判别同步损失<span class="arithmatex">\(\mathcal{L}_{sync}\)</span>。唇音损失是额外对嘴唇进行调整的。最后总的损失就是<span class="arithmatex">\(\mathcal{L}_{CFM}\)</span>与<span class="arithmatex">\(\mathcal{L}_{sync}\)</span>线性组合。</p>
+<ul>
 <li>增强风格模仿的无分类指导</li>
-</ol>
+</ul>
 <p>无分类器引导/CFG在扩散模型采样过程中操纵条件强度，也助于<strong>提高风格化音频到运动模型风格模仿质量</strong>。本文将有/无风格提示的网络预测混合构建CFG速度<span class="arithmatex">\(v_t^{CFG}=v_t(x,a,s;\theta)+\omega (v_t(x,a,s;\theta)-v_t(x,a,0;\theta))\)</span></p>
 
 
