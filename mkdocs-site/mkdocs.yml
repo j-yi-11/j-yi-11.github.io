@@ -42,6 +42,9 @@ nav:
     - AutoRegressiveModel: deeplearning/Autoregressive model.md
   - Paper Reading:
     - MimicTalk: paper-reading/MimicTalk.md
+  - Interview Questions Picked:
+    - IQ Test: interview/iq.md
+    - Algorithm: interview/algorithm.md
     
 markdown_extensions:
   - abbr
