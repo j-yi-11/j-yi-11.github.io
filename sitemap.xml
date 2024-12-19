@@ -2,66 +2,70 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://j-yi-11.github.io/mymkdocs/index.html</loc>
-         <lastmod>2024-11-28</lastmod>
+         <lastmod>2024-12-19</lastmod>
     </url>
     <url>
          <loc>https://j-yi-11.github.io/mymkdocs/tag.html</loc>
-         <lastmod>2024-11-28</lastmod>
+         <lastmod>2024-12-19</lastmod>
     </url>
     <url>
          <loc>https://j-yi-11.github.io/mymkdocs/blog/index.html</loc>
-         <lastmod>2024-11-28</lastmod>
+         <lastmod>2024-12-19</lastmod>
     </url>
     <url>
          <loc>https://j-yi-11.github.io/mymkdocs/blog/2024/09/19/%E5%AE%9E%E7%94%A8%E7%BD%91%E7%AB%99.html</loc>
-         <lastmod>2024-11-28</lastmod>
+         <lastmod>2024-12-19</lastmod>
     </url>
     <url>
          <loc>https://j-yi-11.github.io/mymkdocs/deeplearning/Autoregressive%20model.html</loc>
-         <lastmod>2024-11-28</lastmod>
+         <lastmod>2024-12-19</lastmod>
     </url>
     <url>
          <loc>https://j-yi-11.github.io/mymkdocs/deeplearning/Neural%20network%20basis.html</loc>
-         <lastmod>2024-11-28</lastmod>
+         <lastmod>2024-12-19</lastmod>
+    </url>
+    <url>
+         <loc>https://j-yi-11.github.io/mymkdocs/deeplearning/stable%20diffusion.html</loc>
+         <lastmod>2024-12-19</lastmod>
     </url>
     <url>
          <loc>https://j-yi-11.github.io/mymkdocs/develop/c%2B%2B.html</loc>
-         <lastmod>2024-11-28</lastmod>
+         <lastmod>2024-12-19</lastmod>
     </url>
     <url>
          <loc>https://j-yi-11.github.io/mymkdocs/develop/java.html</loc>
-         <lastmod>2024-11-28</lastmod>
+         <lastmod>2024-12-19</lastmod>
     </url>
     <url>
          <loc>https://j-yi-11.github.io/mymkdocs/develop/latex.html</loc>
-         <lastmod>2024-11-28</lastmod>
+         <lastmod>2024-12-19</lastmod>
     </url>
     <url>
          <loc>https://j-yi-11.github.io/mymkdocs/develop/markdown.html</loc>
-         <lastmod>2024-11-28</lastmod>
+         <lastmod>2024-12-19</lastmod>
     </url>
     <url>
          <loc>https://j-yi-11.github.io/mymkdocs/develop/matlab.html</loc>
-         <lastmod>2024-11-28</lastmod>
+         <lastmod>2024-12-19</lastmod>
     </url>
     <url>
          <loc>https://j-yi-11.github.io/mymkdocs/develop/python.html</loc>
-         <lastmod>2024-11-28</lastmod>
+         <lastmod>2024-12-19</lastmod>
     </url>
     <url>
          <loc>https://j-yi-11.github.io/mymkdocs/interview/algorithm.html</loc>
-         <lastmod>2024-11-28</lastmod>
+         <lastmod>2024-12-19</lastmod>
     </url>
     <url>
          <loc>https://j-yi-11.github.io/mymkdocs/interview/iq.html</loc>
-         <lastmod>2024-11-28</lastmod>
+         <lastmod>2024-12-19</lastmod>
     </url>
     <url>
          <loc>https://j-yi-11.github.io/mymkdocs/paper-reading/MimicTalk.html</loc>
-         <lastmod>2024-11-28</lastmod>
+         <lastmod>2024-12-19</lastmod>
     </url>
     <url>
          <loc>https://j-yi-11.github.io/mymkdocs/blog/archive/2024.html</loc>
-         <lastmod>2024-11-28</lastmod>
+         <lastmod>2024-12-19</lastmod>
     </url>
 </urlset>
