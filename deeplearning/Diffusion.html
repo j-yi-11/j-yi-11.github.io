@@ -1199,7 +1199,7 @@
 
   <h1>StableDiffusion</h1>
 
-<p>这里主要记录一下对stable diffusion的认识</p>
+<p>这里主要记录一下对diffusion的认识</p>
 <h3 id="如何训练diffusion-model">如何训练diffusion model<a class="headerlink" href="#如何训练diffusion-model" title="Permanent link"></a></h3>
 <p>本质上是训练U-Net，让U-Net学会每一步如何去除噪声。</p>
 <p>在每一轮的训练过程中，包含以下内容：</p>
@@ -1215,6 +1215,7 @@
 <h3 id="stable-diffusion的training过程">Stable Diffusion的training过程<a class="headerlink" href="#stable-diffusion的training过程" title="Permanent link"></a></h3>
 <p>大致思路和diffusion类似，只是多了文本的处理。</p>
 <p>训练数据集的制作，和上面相比，加入 文本 信息，其他不变。</p>
+<p><strong>文本语义信息怎么用？</strong>：在内部的每一个的Resnet后面加上一个Attention模块处理语义信息，attention模块的注意力来源于CLIP对输入文本编码得到的text embedding。</p>
 <h3 id="stable-diffusion的inference过程">Stable Diffusion的inference过程<a class="headerlink" href="#stable-diffusion的inference过程" title="Permanent link"></a></h3>
 <p>扩散模型的缺点：</p>
 <ol>
