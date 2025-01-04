@@ -89,6 +89,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#什么样子的场景适合被建模成-generative-model" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -903,6 +908,17 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Introduction
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="Introduction.html" class="md-nav__link md-nav__link--active">
         
   
@@ -912,6 +928,32 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#什么样子的场景适合被建模成-generative-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      什么样子的场景适合被建模成 generative model
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1121,6 +1163,23 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#什么样子的场景适合被建模成-generative-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      什么样子的场景适合被建模成 generative model
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -1136,7 +1195,25 @@
 
   <h1>Introduction</h1>
 
+<p>相关资源：https://mit-6s978.github.io/schedule.html</p>
 <p>MIT 何凯明的课，打算自学一下，这个部分主要是一个引言部分。</p>
+<h3 id="什么样子的场景适合被建模成-generative-model">什么样子的场景适合被建模成 generative model<a class="headerlink" href="#什么样子的场景适合被建模成-generative-model" title="Permanent link"></a></h3>
+<p>主要包含以下几个共同特征：
+- 对于1个输入，可能有多个或者无穷多个输出。
+- 某几种预测似乎会更合理：我的理解是预测结果应该具有多元性。
+- 训练数据不像传统分类任务一样具有确定的标签/没有确定解。
+    相比之下，discriminative model对于一个sample <span class="arithmatex">\(x\)</span>（比如一个人的图），应该输出1个label <span class="arithmatex">\(y\)</span>（person）；但是generative model对于一个label <span class="arithmatex">\(y\)</span>（比如"dog"），应该输出至少一个sample <span class="arithmatex">\(x\)</span>（比如多个狗的图片）。
+- 预测的结果会比输入更加高维度/包含信息更多/更复杂。</p>
+<p>我们再从贝叶斯公式的角度来看这个问题。</p>
+<p>$$
+p(y|x)=p(x|y)\frac{p(y)}{p(x)}
+$$
+discriminative model对应着公式里面的<span class="arithmatex">\(p(y|x)\)</span>这一项，表示已知sample <span class="arithmatex">\(x\)</span>，模型需要预测各个label <span class="arithmatex">\(y\)</span>的概率。而generative model对应着公式里面的<span class="arithmatex">\(p(x|y)\)</span>这一项，表示已知label <span class="arithmatex">\(y\)</span>，模型需要预测各个sample <span class="arithmatex">\(x\)</span>的概率。</p>
+<p>在label <span class="arithmatex">\(y\)</span>为需要推理的时候，<span class="arithmatex">\(p(y)\)</span>表示<span class="arithmatex">\(y\)</span>的先验概率；同时我们给定了<span class="arithmatex">\(x\)</span>，那么此时的<span class="arithmatex">\(p(x)\)</span>可以看成是一个常数。由此，我们可以得到，<strong>generative model具有discriminative的性质</strong>：因为<span class="arithmatex">\(p(y)\)</span>与<span class="arithmatex">\(p(x)\)</span>都已知，我们可以把<span class="arithmatex">\(p(x|y)\)</span>用<span class="arithmatex">\(p(y|x)\)</span>，<span class="arithmatex">\(p(y)\)</span>与<span class="arithmatex">\(p(x)\)</span>进行表示。</p>
+<p>但是<strong>discriminative model不具有generative的性质</strong>。我们把贝叶斯公式重写一下：
+$$
+p(x|y)=p(y|x)\frac{p(x)}{p(y)}
+$$</p>
 
 
 
