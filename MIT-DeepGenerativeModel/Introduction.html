@@ -16,7 +16,7 @@
         <link rel="prev" href="../deeplearning/Inpainting.html">
       
       
-        <link rel="next" href="../paper-reading/MimicTalk.html">
+        <link rel="next" href="VAE.html">
       
       
       <link rel="icon" href="../assets/images/favicon.png">
@@ -951,10 +951,49 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#probabilistic-modeling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Probabilistic modeling
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deep-generative-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deep Generative Model
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="VAE.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Variational Autoencoder
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -1178,6 +1217,24 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#probabilistic-modeling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Probabilistic modeling
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deep-generative-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deep Generative Model
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1196,7 +1253,7 @@
   <h1>Introduction</h1>
 
 <p>相关资源：https://mit-6s978.github.io/schedule.html</p>
-<p>MIT 何凯明的课，打算自学一下，这个部分主要是一个引言部分。</p>
+<p>MIT 何凯明的课，打算自学一下，这个部分主要是一个引言部分。引言部分从数学角度出发的。</p>
 <h3 id="什么样子的场景适合被建模成-generative-model">什么样子的场景适合被建模成 generative model<a class="headerlink" href="#什么样子的场景适合被建模成-generative-model" title="Permanent link"></a></h3>
 <p>主要包含以下几个共同特征：
 - 对于1个输入，可能有多个或者无穷多个输出。
@@ -1213,7 +1270,32 @@ discriminative model对应着公式里面的<span class="arithmatex">\(p(y|x)\)<
 <p>但是<strong>discriminative model不具有generative的性质</strong>。我们把贝叶斯公式重写一下：
 $$
 p(x|y)=p(y|x)\frac{p(x)}{p(y)}
-$$</p>
+$$
+我们会发现<span class="arithmatex">\(p(x)\)</span>此时成为了未知的，<span class="arithmatex">\(x\)</span>作为一个sample，我们此时却不知道它的概率分布。所以，只要得到<span class="arithmatex">\(x\)</span>的概率分布，discriminative model也会具有generative的性质。<strong>如何获取样本的概率分布</strong>成为了巨大的挑战。（<strong>在上式子中<span class="arithmatex">\(p(x|y)\)</span>，<span class="arithmatex">\(x\)</span>往往更具体/信息量更大，<span class="arithmatex">\(y\)</span>往往更抽象</strong>）</p>
+<h3 id="probabilistic-modeling">Probabilistic modeling<a class="headerlink" href="#probabilistic-modeling" title="Permanent link"></a></h3>
+<p>我们能够观察到的，只是模型的一部分data points，而模型实际上要做的是从一部分data points推理预测data的分布函数。</p>
+<p>generative model也会和discriminative model一样存在过拟合，欠拟合：</p>
+<p><img alt="欠拟合" src="lec1-underfit.png" /></p>
+<p>欠拟合的例子中，预测的分布函数和数据点偏差很大。</p>
+<p><img alt="" src="lec1-overfit.png" /></p>
+<p>过拟合的例子，极端的情况就是模型单纯“记住”了训练数据，丧失推理能力。</p>
+<p>在generative model训练的时候，我们从训练数据里面估计出数据的分布函数，然后和实际的数据分布函数进行求损失。</p>
+<h3 id="deep-generative-model">Deep Generative Model<a class="headerlink" href="#deep-generative-model" title="Permanent link"></a></h3>
+<p>深度学习其实是representation learning：</p>
+<ul>
+<li>学习表示单个数据实例：数据实例<span class="arithmatex">\(x\)</span>推理得到对应的feature <span class="arithmatex">\(f(x)\)</span>，损失为<span class="arithmatex">\(\mathcal{L}(y,f(x))\)</span></li>
+<li>学习表示多个数据的分布：单一的分布（比如高斯分布）<span class="arithmatex">\(\pi\)</span>推理得到复杂分布 <span class="arithmatex">\(g(\pi)\)</span>，损失为<span class="arithmatex">\(\mathcal{L}(p_x,g(\pi))\)</span></li>
+</ul>
+<p>二者经常一起出现。</p>
+<p>但是，并非所有probabilistic modeling的部分都是用learning得到，比如autoregressive model，diffusion model里面dependency graph是预先设定好的，但是mapping function是通过learning实现的（autoregressive model里面是transformer，diffusion model里面是U-Net）。</p>
+<p>对于真实问题进行deep generative model的过程通常包括：</p>
+<ol>
+<li>Formulation：把问题建模成为概率分布预测问题，复杂分布<strong>分解</strong>为简单易得的分布</li>
+<li>Representation：深度神经网络表示数据和数据分布</li>
+<li>Objective function：衡量预测的分布和实际分布的差距</li>
+<li>Optimization：优化的是神经网络里面的参数/对复杂分布的<strong>分解方式</strong></li>
+<li>Inference：生成新的sample/概率密度进行估计</li>
+</ol>
 
 
 
