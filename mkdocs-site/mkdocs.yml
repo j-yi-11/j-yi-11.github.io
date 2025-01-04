@@ -40,8 +40,13 @@ nav:
     - Java: develop/java.md
   - Deep Learning:
     - AutoRegressiveModel: deeplearning/Autoregressive model.md
+    - StableDiffusion: deeplearning/Diffusion.md
+    - Inpainting: deeplearning/Inpainting.md
+  - MIT 6.S978
+   - Introduction: deeplearning/MIT 6.S978/Introduction.md
   - Paper Reading:
     - MimicTalk: paper-reading/MimicTalk.md
+    - ControlNet: deeplearning/ControlNet.md
   - Interview Questions Picked:
     - IQ Test: interview/iq.md
     - Algorithm: interview/algorithm.md
