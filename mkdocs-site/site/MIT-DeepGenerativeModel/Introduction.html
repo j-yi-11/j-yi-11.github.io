@@ -7,27 +7,31 @@
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
       
-        <meta name="author" content="CaiYa">
+        <meta name="author" content="j-yi-11">
       
       
-        <link rel="canonical" href="https://j-yi-11.github.io/mymkdocs/blog/2024/09/19/%E5%AE%9E%E7%94%A8%E7%BD%91%E7%AB%99.html">
+        <link rel="canonical" href="https://j-yi-11.github.io/mymkdocs/MIT-DeepGenerativeModel/Introduction.html">
       
       
+        <link rel="prev" href="../deeplearning/Inpainting.html">
       
       
-      <link rel="icon" href="../../../../assets/images/favicon.png">
+        <link rel="next" href="VAE.html">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.35">
     
     
       
-        <title>实用网站 - HomePage of CaiYa</title>
+        <title>Introduction - HomePage of CaiYa</title>
       
     
     
-      <link rel="stylesheet" href="../../../../assets/stylesheets/main.35f28582.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.35f28582.min.css">
       
         
-        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -50,17 +54,17 @@
     
       <link rel="stylesheet" href="https://unpkg.com/katex@0/dist/katex.min.css">
     
-      <link rel="stylesheet" href="../../../../stylesheets/link.css">
+      <link rel="stylesheet" href="../stylesheets/link.css">
     
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@latest/dist/gitalk.css">
     
-      <link rel="stylesheet" href="../../../../ckplayer/css/ckplayer.css">
+      <link rel="stylesheet" href="../ckplayer/css/ckplayer.css">
     
       <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
     
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.1.0/style.css">
     
-    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -85,6 +89,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#什么样子的场景适合被建模成-generative-model" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -95,7 +104,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../../../../index.html" title="HomePage of CaiYa" class="md-header__button md-logo" aria-label="HomePage of CaiYa" data-md-component="logo">
+    <a href="../index.html" title="HomePage of CaiYa" class="md-header__button md-logo" aria-label="HomePage of CaiYa" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -115,7 +124,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              实用网站
+              Introduction
             
           </span>
         </div>
@@ -243,7 +252,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../../index.html" class="md-tabs__link">
+      <a href="../index.html" class="md-tabs__link">
         
   
     
@@ -258,13 +267,11 @@
         
   
   
-    
-  
   
     
     
-      <li class="md-tabs__item md-tabs__item--active">
-        <a href="../../../index.html" class="md-tabs__link">
+      <li class="md-tabs__item">
+        <a href="../blog/index.html" class="md-tabs__link">
           
   
   Blog
@@ -282,7 +289,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../../develop/markdown.html" class="md-tabs__link">
+        <a href="../develop/markdown.html" class="md-tabs__link">
           
   
   Develop
@@ -300,7 +307,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../../deeplearning/Autoregressive%20model.html" class="md-tabs__link">
+        <a href="../deeplearning/Autoregressive%20model.html" class="md-tabs__link">
           
   
   Deep Learning
@@ -314,11 +321,13 @@
         
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="../../../../MIT-DeepGenerativeModel/Introduction.html" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="Introduction.html" class="md-tabs__link">
           
   
   MIT 6.S978
@@ -336,7 +345,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../../paper-reading/MimicTalk.html" class="md-tabs__link">
+        <a href="../paper-reading/MimicTalk.html" class="md-tabs__link">
           
   
   Paper Reading
@@ -354,7 +363,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../../interview/iq.html" class="md-tabs__link">
+        <a href="../interview/iq.html" class="md-tabs__link">
           
   
   Interview Questions Picked
@@ -376,9 +385,7 @@
           
             
               
-                
-              
-              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
@@ -389,7 +396,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../../../index.html" title="HomePage of CaiYa" class="md-nav__button md-logo" aria-label="HomePage of CaiYa" data-md-component="logo">
+    <a href="../index.html" title="HomePage of CaiYa" class="md-nav__button md-logo" aria-label="HomePage of CaiYa" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -407,7 +414,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../index.html" class="md-nav__link">
+      <a href="../index.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -424,28 +431,25 @@
       
   
   
-    
   
   
-  
     
     
     
       
-        
-        
-      
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
         
           
-          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
             
   
   <span class="md-ellipsis">
@@ -456,7 +460,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             Blog
@@ -467,14 +471,12 @@
                 
   
   
-    
-  
   
     
   
   
-    <li class="md-nav__item md-nav__item--active">
-      <a href="../../../index.html" class="md-nav__link">
+    <li class="md-nav__item">
+      <a href="../blog/index.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -537,7 +539,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../archive/2024.html" class="md-nav__link">
+      <a href="../blog/archive/2024.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -613,7 +615,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../develop/markdown.html" class="md-nav__link">
+      <a href="../develop/markdown.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -634,7 +636,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../develop/latex.html" class="md-nav__link">
+      <a href="../develop/latex.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -655,7 +657,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../develop/python.html" class="md-nav__link">
+      <a href="../develop/python.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -676,7 +678,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../develop/c%2B%2B.html" class="md-nav__link">
+      <a href="../develop/c%2B%2B.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -697,7 +699,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../develop/matlab.html" class="md-nav__link">
+      <a href="../develop/matlab.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -718,7 +720,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../develop/java.html" class="md-nav__link">
+      <a href="../develop/java.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -786,7 +788,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../deeplearning/Autoregressive%20model.html" class="md-nav__link">
+      <a href="../deeplearning/Autoregressive%20model.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -807,7 +809,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../deeplearning/Diffusion.html" class="md-nav__link">
+      <a href="../deeplearning/Diffusion.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -828,7 +830,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../deeplearning/Inpainting.html" class="md-nav__link">
+      <a href="../deeplearning/Inpainting.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -853,25 +855,28 @@
       
   
   
+    
   
   
+  
     
     
     
-      
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
       
         
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
         
           
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
-        
-          
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
             
   
   <span class="md-ellipsis">
@@ -882,7 +887,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             MIT 6.S978
@@ -893,10 +898,28 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../../../MIT-DeepGenerativeModel/Introduction.html" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Introduction
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="Introduction.html" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -905,6 +928,51 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#什么样子的场景适合被建模成-generative-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      什么样子的场景适合被建模成 generative model
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#probabilistic-modeling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Probabilistic modeling
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deep-generative-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deep Generative Model
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -917,7 +985,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../MIT-DeepGenerativeModel/VAE.html" class="md-nav__link">
+      <a href="VAE.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -985,7 +1053,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../paper-reading/MimicTalk.html" class="md-nav__link">
+      <a href="../paper-reading/MimicTalk.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1006,7 +1074,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../deeplearning/ControlNet.md" class="md-nav__link">
+      <a href="../deeplearning/ControlNet.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1074,7 +1142,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../interview/iq.html" class="md-nav__link">
+      <a href="../interview/iq.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1095,7 +1163,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../interview/algorithm.html" class="md-nav__link">
+      <a href="../interview/algorithm.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1124,8 +1192,6 @@
             
             
               
-                
-              
               <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
@@ -1136,6 +1202,41 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#什么样子的场景适合被建模成-generative-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      什么样子的场景适合被建模成 generative model
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#probabilistic-modeling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Probabilistic modeling
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deep-generative-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deep Generative Model
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -1143,79 +1244,95 @@
             
           
           
-  <div class="md-content md-content--post" data-md-component="content">
-    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
-      <div class="md-sidebar__scrollwrap">
-        <div class="md-sidebar__inner md-post">
-          <nav class="md-nav md-nav--primary">
-            <div class="md-post__back">
-              <div class="md-nav__title md-nav__container">
-                <a href="../../../index.html" class="md-nav__link">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
-                  <span class="md-ellipsis">
-                    Back to index
-                  </span>
-                </a>
-              </div>
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  <h1>Introduction</h1>
+
+<p>相关资源：https://mit-6s978.github.io/schedule.html</p>
+<p>MIT 何凯明的课，打算自学一下，这个部分主要是一个引言部分。引言部分从数学角度出发的。</p>
+<h3 id="什么样子的场景适合被建模成-generative-model">什么样子的场景适合被建模成 generative model<a class="headerlink" href="#什么样子的场景适合被建模成-generative-model" title="Permanent link"></a></h3>
+<p>主要包含以下几个共同特征：
+- 对于1个输入，可能有多个或者无穷多个输出。
+- 某几种预测似乎会更合理：我的理解是预测结果应该具有多元性。
+- 训练数据不像传统分类任务一样具有确定的标签/没有确定解。
+    相比之下，discriminative model对于一个sample <span class="arithmatex">\(x\)</span>（比如一个人的图），应该输出1个label <span class="arithmatex">\(y\)</span>（person）；但是generative model对于一个label <span class="arithmatex">\(y\)</span>（比如"dog"），应该输出至少一个sample <span class="arithmatex">\(x\)</span>（比如多个狗的图片）。
+- 预测的结果会比输入更加高维度/包含信息更多/更复杂。</p>
+<p>我们再从贝叶斯公式的角度来看这个问题。</p>
+<p>$$
+p(y|x)=p(x|y)\frac{p(y)}{p(x)}
+$$
+discriminative model对应着公式里面的<span class="arithmatex">\(p(y|x)\)</span>这一项，表示已知sample <span class="arithmatex">\(x\)</span>，模型需要预测各个label <span class="arithmatex">\(y\)</span>的概率。而generative model对应着公式里面的<span class="arithmatex">\(p(x|y)\)</span>这一项，表示已知label <span class="arithmatex">\(y\)</span>，模型需要预测各个sample <span class="arithmatex">\(x\)</span>的概率。</p>
+<p>在label <span class="arithmatex">\(y\)</span>为需要推理的时候，<span class="arithmatex">\(p(y)\)</span>表示<span class="arithmatex">\(y\)</span>的先验概率；同时我们给定了<span class="arithmatex">\(x\)</span>，那么此时的<span class="arithmatex">\(p(x)\)</span>可以看成是一个常数。由此，我们可以得到，<strong>generative model具有discriminative的性质</strong>：因为<span class="arithmatex">\(p(y)\)</span>与<span class="arithmatex">\(p(x)\)</span>都已知，我们可以把<span class="arithmatex">\(p(x|y)\)</span>用<span class="arithmatex">\(p(y|x)\)</span>，<span class="arithmatex">\(p(y)\)</span>与<span class="arithmatex">\(p(x)\)</span>进行表示。</p>
+<p>但是<strong>discriminative model不具有generative的性质</strong>。我们把贝叶斯公式重写一下：
+$$
+p(x|y)=p(y|x)\frac{p(x)}{p(y)}
+$$
+我们会发现<span class="arithmatex">\(p(x)\)</span>此时成为了未知的，<span class="arithmatex">\(x\)</span>作为一个sample，我们此时却不知道它的概率分布。所以，只要得到<span class="arithmatex">\(x\)</span>的概率分布，discriminative model也会具有generative的性质。<strong>如何获取样本的概率分布</strong>成为了巨大的挑战。（<strong>在上式子中<span class="arithmatex">\(p(x|y)\)</span>，<span class="arithmatex">\(x\)</span>往往更具体/信息量更大，<span class="arithmatex">\(y\)</span>往往更抽象</strong>）</p>
+<h3 id="probabilistic-modeling">Probabilistic modeling<a class="headerlink" href="#probabilistic-modeling" title="Permanent link"></a></h3>
+<p>我们能够观察到的，只是模型的一部分data points，而模型实际上要做的是从一部分data points推理预测data的分布函数。</p>
+<p>generative model也会和discriminative model一样存在过拟合，欠拟合：</p>
+<p><img alt="欠拟合" src="lec1-underfit.png" /></p>
+<p>欠拟合的例子中，预测的分布函数和数据点偏差很大。</p>
+<p><img alt="" src="lec1-overfit.png" /></p>
+<p>过拟合的例子，极端的情况就是模型单纯“记住”了训练数据，丧失推理能力。</p>
+<p>在generative model训练的时候，我们从训练数据里面估计出数据的分布函数，然后和实际的数据分布函数进行求损失。</p>
+<h3 id="deep-generative-model">Deep Generative Model<a class="headerlink" href="#deep-generative-model" title="Permanent link"></a></h3>
+<p>深度学习其实是representation learning：</p>
+<ul>
+<li>学习表示单个数据实例：数据实例<span class="arithmatex">\(x\)</span>推理得到对应的feature <span class="arithmatex">\(f(x)\)</span>，损失为<span class="arithmatex">\(\mathcal{L}(y,f(x))\)</span></li>
+<li>学习表示多个数据的分布：单一的分布（比如高斯分布）<span class="arithmatex">\(\pi\)</span>推理得到复杂分布 <span class="arithmatex">\(g(\pi)\)</span>，损失为<span class="arithmatex">\(\mathcal{L}(p_x,g(\pi))\)</span></li>
+</ul>
+<p>二者经常一起出现。</p>
+<p>但是，并非所有probabilistic modeling的部分都是用learning得到，比如autoregressive model，diffusion model里面dependency graph是预先设定好的，但是mapping function是通过learning实现的（autoregressive model里面是transformer，diffusion model里面是U-Net）。</p>
+<p>对于真实问题进行deep generative model的过程通常包括：</p>
+<ol>
+<li>Formulation：把问题建模成为概率分布预测问题，复杂分布<strong>分解</strong>为简单易得的分布</li>
+<li>Representation：深度神经网络表示数据和数据分布</li>
+<li>Objective function：衡量预测的分布和实际分布的差距</li>
+<li>Optimization：优化的是神经网络里面的参数/对复杂分布的<strong>分解方式</strong></li>
+<li>Inference：生成新的sample/概率密度进行估计</li>
+</ol>
+
+
+
+
+
+
+
+  
+    
+  
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Last update">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2025-01-06</span>
+  </span>
+
+    
+    
+    
+    
+  </aside>
+
+
+
+
+
+                
+              </article>
             </div>
-            
-            <ul class="md-post__meta md-nav__list">
-              <li class="md-nav__item md-nav__item--section">
-                <div class="md-post__title">
-                  <span class="md-ellipsis">
-                    Metadata
-                  </span>
-                </div>
-                <nav class="md-nav">
-                  <ul class="md-nav__list">
-                    <li class="md-nav__item">
-                      <div class="md-nav__link">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
-                        <time datetime="2024-09-19 00:00:00" class="md-ellipsis">September 19, 2024</time>
-                      </div>
-                    </li>
-                    
-                    
-                    
-                  </ul>
-                </nav>
-              </li>
-            </ul>
-          </nav>
           
-        </div>
-      </div>
-    </div>
-    <article class="md-content__inner md-typeset">
-      
-        
-
-
-  <h1>实用网站</h1>
-
-<p>收录一些比较实用的网站如下。</p>
-<p><a href="https://chat.openai.com/">ChatGPT</a></p>
-
-
-
-
-
-
-
-  
-  
-
-
-
-
-  
-
-
-
-      
-    </article>
-  </div>
-
           
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
@@ -1281,12 +1398,12 @@
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../../../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.top", "search.suggest", "search.highlight", "navigation.expand", "search.share"], "search": "../../../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.top", "search.suggest", "search.highlight", "navigation.expand", "search.share"], "search": "../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../../../assets/javascripts/bundle.56dfad97.min.js"></script>
+      <script src="../assets/javascripts/bundle.56dfad97.min.js"></script>
       
-        <script src="../../../../javascripts/mathjax.js"></script>
+        <script src="../javascripts/mathjax.js"></script>
       
         <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
       
@@ -1294,13 +1411,13 @@
       
         <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
       
-        <script src="../../../../javascripts/katex.js"></script>
+        <script src="../javascripts/katex.js"></script>
       
         <script src="https://unpkg.com/katex@0/dist/katex.min.js"></script>
       
         <script src="https://unpkg.com/katex@0/dist/contrib/auto-render.min.js"></script>
       
-        <script src="../../../../ckplayer/js/ckplayer.js"></script>
+        <script src="../ckplayer/js/ckplayer.js"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/gitalk@latest/dist/gitalk.min.js"></script>
       
