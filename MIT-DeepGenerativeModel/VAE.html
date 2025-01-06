@@ -1239,11 +1239,11 @@
 \]</div>
 <p>然后接下来的过程比较数学：</p>
 <ol>
-<li>先说明 最小化预测的分布和真实分布的距离 等价于 最大化似然函数 <span class="arithmatex">\(\max_{\theta}\mathbf{E}_{x\sim p_{\text{data}}}\log{p_{\theta}}(x)\)</span>。证明过程如下：我们最终需要确定的参数<span class="arithmatex">\(\theta\)</span>的值表示为：</li>
-</ol>
-<p>$$
+<li>先说明 最小化预测的分布和真实分布的距离 等价于 最大化似然函数 <span class="arithmatex">\(\max_{\theta}\mathbf{E}_{x\sim p_{\text{data}}}\log{p_{\theta}}(x)\)</span>。证明过程如下：我们最终需要确定的参数<span class="arithmatex">\(\theta\)</span>的值表示为：
+   $$
    \theta^{*}=\arg\min_{\theta}\mathcal{D}<em _text_data="\text{data">{KL}(p</em>(x))
-   $$}}(x)||p_{\theta</p>
+   $$}}(x)||p_{\theta</li>
+</ol>
 <p>根据KL散度的定义，我们可以得到：
    $$
    \theta^{*}=\arg\min_{\theta}\sum_x p_{\text{data}}(x)\log(\frac{p_{\text{data}}(x)}{p_{\theta}(x)})
