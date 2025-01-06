@@ -931,6 +931,17 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Variational Autoencoder
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="VAE.html" class="md-nav__link md-nav__link--active">
         
   
@@ -940,6 +951,34 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#latent-variable-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      Latent Variable Model
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1151,6 +1190,23 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#latent-variable-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      Latent Variable Model
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -1166,11 +1222,144 @@
 
 <p>这一节主要介绍VAE</p>
 <h1 id="variational-autoencoder-vae">Variational Autoencoder (VAE)<a class="headerlink" href="#variational-autoencoder-vae" title="Permanent link"></a></h1>
+<h2 id="latent-variable-model">Latent Variable Model<a class="headerlink" href="#latent-variable-model" title="Permanent link"></a></h2>
+<p>假设真实世界的数据<span class="arithmatex">\(x\)</span>是从latent variable <span class="arithmatex">\(z\)</span>生成的，真实数据<span class="arithmatex">\(x\)</span>服从于一个数据分布<span class="arithmatex">\(p(x)\)</span>，latent variable服从于另一个分布<span class="arithmatex">\(p(z)\)</span>。那么模型需要做的就是：学会<span class="arithmatex">\(p(x)\rightarrow p(z)\)</span>这个映射，即<span class="arithmatex">\(p(x|z)\)</span>。</p>
+<p>我们加入deep learning的思想，用一个<strong>参数<span class="arithmatex">\(\theta\)</span>表示神经网络中可学习的参数</strong>，那么我们的问题就变成：生成器模型<span class="arithmatex">\(p_\theta(x|z)\)</span>如何从<span class="arithmatex">\(p(z)\)</span>这个分布推理出最终的<span class="arithmatex">\(p_\theta(x)\)</span>。</p>
+<p>为了衡量预测的结果分布<span class="arithmatex">\(p_\theta(x)\)</span>的质量（说白了就是构建与真实结果分布<span class="arithmatex">\(p_\text{data}(x)\)</span>的损失函数），我们引入KL散度，把损失函数先定义为最小化预测的分布和真实分布的距离：
+$$
+\mathcal{L}=\min_{\theta}\mathcal{D}<em _text_data="\text{data">{KL}(p</em>(x))
+$$
+然后接下来的过程比较数学：}}(x)||p_{\theta</p>
+<ol>
+<li>先说明 最小化预测的分布和真实分布的距离 等价于 最大化似然函数 <span class="arithmatex">\(\max_{\theta}\mathbf{E}_{x\sim p_{\text{data}}}\log{p_{\theta}}(x)\)</span>。证明过程如下：我们最终需要确定的参数<span class="arithmatex">\(\theta\)</span>的值表示为<br />
+   $$
+   \theta^<em>=\arg\min_{\theta}\mathcal{D}<em _text_data="\text{data">{KL}(p</em>(x))
+   $$
+   根据KL散度的定义，我们可以得到：
+   $$
+   \theta^}}(x)||p_{\theta</em>=\arg\min_{\theta}\sum_x p_{\text{data}}(x)\log(\frac{p_{\text{data}}(x)}{p_{\theta}(x)})
+   $$
+   由于真实分布<span class="arithmatex">\(p_\text{data}(x)\)</span>已知，可以看成常数，我们把log函数展开得到思路等价的表达：
+   $$
+   \theta^*=\arg\min_{\theta}\sum_x -p_{\text{data}}(x)\log p_{\theta}(x)+\text{const}
+   $$</li>
+</ol>
+<p>即：
+   $$
+   \theta^<em>=\arg\max_{\theta}\sum_x p_{\text{data}}(x)\log p_{\theta}(x)
+   $$
+   由期望的定义得到：
+   $$
+   \theta^</em>=\arg\max_{\theta}\mathbf{E}<em _text_data="\text{data">{x\sim p</em>(x)
+   $$}}}\log p_{\theta</p>
+<ol>
+<li>接下来，我们对<span class="arithmatex">\(\log p_\theta(x)\)</span>进行衡量，<span class="arithmatex">\(p_\theta(x)\)</span>可以根据条件概率公式得到：
+   $$
+   p_\theta(x)=\int_z p_\theta(x|z)p(z)dz
+   $$
+   而在上面的表达式中，需要进行求解的参数 <span class="arithmatex">\(\theta\)</span> 与 latent variable 所服从的分布 <span class="arithmatex">\(p(z)\)</span> 都是不知道的。我们进而引入一个"可控的"分布 <span class="arithmatex">\(q(z)\)</span> 对 <span class="arithmatex">\(p(z)\)</span> 进行控制：</li>
+</ol>
+<p>这是一个数学游戏，我们先对 <span class="arithmatex">\(\log p_\theta(x)\)</span> ，用<span class="arithmatex">\(q(z)\)</span>这个分布进行“等价”重写：
+   $$
+   \log p_\theta(x)=\int_z q(z)\log p_\theta(x)dz
+   $$
+   接着利用贝叶斯公式得到：
+   $$
+   \log p_\theta(x)=\int_z q(z)\log(\frac{p_\theta(x|z)p_\theta(z)}{p_\theta(z|x)})dz
+   $$</p>
+<p>再玩一个数学游戏，log 函数的指数乘上 <span class="arithmatex">\(\frac{q(z)}{q(z)}\)</span> ，展开得到：
+   $$
+   \log p_\theta(x)=\int_z q(z)(\log p_\theta(x|z)+\log (\frac{p_\theta(x)}{q(z)})+\log (\frac{q(z)}{p_\theta(z|x)}))dz
+   $$
+   根据期望与散度的定义，分别得到：
+   $$
+   \log p_\theta(x)=\mathbf{E}<em>{z\sim q(z)}\log p</em>\theta(x|z)-\mathcal{D}<em>{KL}(q(z)||p</em>\theta(z))+\mathcal{D}<em>{KL}(q(z)||p</em>\theta(z|x))
+   $$</p>
+<p>到这里我们可以发现，原先未知的 <span class="arithmatex">\(\log p_\theta(x)\)</span> 函数的表示中 ，仅有 <span class="arithmatex">\(\mathcal{D}_{KL}(q(z)||p_\theta(z|x))\)</span>  是未知的。</p>
+<blockquote>
+<p>这里还得再看看，为啥这个可控，那个不可控</p>
+</blockquote>
+<p>我们把上面的式子进行变形，显然可得：
+   $$
+   \log p_\theta(x)-\mathcal{D}<em>{KL}(q(z)||p</em>\theta(z|x))=\mathbf{E}<em>{z\sim q(z)}\log p</em>\theta(x|z)-\mathcal{D}<em>{KL}(q(z)||p</em>\theta(z))
+   $$
+   式子中左边均为未知的，右边均为已知的。对于任意的分布<span class="arithmatex">\(q(z)\)</span>，由于KL散度具有非负性，我们可以得到 <span class="arithmatex">\(\log p_\theta(x)\)</span> 函数的下界为 <span class="arithmatex">\(\mathbf{E}_{z\sim q(z)}\log p_\theta(x|z)-\mathcal{D}_{KL}(q(z)||p_\theta(z))\)</span>。这就是传说中的 <strong>ELBO</strong> ：
+   $$
+   \log p_\theta(x)\geq \mathbf{E}<em>{z\sim q(z)}\log p</em>\theta(x|z)-\mathcal{D}<em>{KL}(q(z)||p</em>\theta(z))
+   $$</p>
+<ol>
+<li>我们接下来对<span class="arithmatex">\(q(z)\)</span>进行操作：把<span class="arithmatex">\(q(z)\)</span>用<span class="arithmatex">\(\phi\)</span>参数化为<span class="arithmatex">\(q_\phi(z|x)\)</span>，并且令 <span class="arithmatex">\(p_\theta (z)\)</span> 成为 <span class="arithmatex">\(p(z)\)</span> 的先验。</li>
+</ol>
+<blockquote>
+<p>这里需要理解一下</p>
+</blockquote>
+<p>我们接下来的目标是使得ELBO最大化，即我们要最小化以下函数：
+   $$
+   \mathcal{L}<em q_z_="q(z)" z_sim="z\sim">{\theta,\phi}(x)=-\mathbf{E}</em>}\log p_\theta(x|z)+\mathcal{D<em>{KL}(q(z)||p</em>\theta(z))
+   $$
+   重写后为：
+   $$
+   \mathcal{L}<em q__phi_z_x_="q_\phi(z|x)" z_sim="z\sim">{\theta,\phi}(x)=-\mathbf{E}</em>}\log p_\theta(x|z)+\mathcal{D<em>{KL}(q</em>\phi(z|x)||p_\theta(z))
+   $$
+   我们对上面这个式子进行例子解释：假定<strong>一个</strong>已知的样本 <span class="arithmatex">\(x\)</span>，经过encoder编码后的latent variable服从于 <span class="arithmatex">\(q_\phi(z|x)\)</span>，从<span class="arithmatex">\(q_\phi(z|x)\)</span>中采样得到<span class="arithmatex">\(z\)</span>，<span class="arithmatex">\(z\)</span>经过decoder <span class="arithmatex">\(p_\theta(x|z)\)</span>解码后，生成预测的结果 <span class="arithmatex">\(x'\)</span>。</p>
+<p>在这个过程中，从原先的样本<span class="arithmatex">\(x\)</span>生成新的样本<span class="arithmatex">\(x'\)</span>，这个中间存在一个<strong>重建损失</strong>，即<span class="arithmatex">\(-\mathbf{E}_{z\sim q_\phi(z|x)}\log p_\theta(x|z)\)</span>。而在利用<span class="arithmatex">\(q_\phi(z|x)\)</span>这个分布去近似真实的分布<span class="arithmatex">\(q(z)\)</span>的时候，又存在<strong>正则化损失</strong>，即 <span class="arithmatex">\(\mathcal{D}_{KL}(q_\phi(z|x)||p_\theta(z))\)</span>。</p>
+<ul>
+<li>
+<p>对于<strong>重建损失</strong>：我们采用最常见的L2 损失，把decoder <span class="arithmatex">\(p_\theta(x|z)\)</span>建模为高斯分布 <span class="arithmatex">\(\mathcal{N}(x|x',\sigma_0^2)\)</span>。利用负对数似然估计得到：
+     $$
+     \frac{1}{2\sigma_0<sup>2}||x-x'||</sup>2+\text{const}
+     $$</p>
+<blockquote>
+<p>这里还得看</p>
+</blockquote>
+</li>
+<li>
+<p>对于<strong>正则化损失</strong>：我们采用高斯先验，令<span class="arithmatex">\(p(z)\)</span>为<span class="arithmatex">\(\mathcal{N}(z|0,\mathbf{I})\)</span>，把<span class="arithmatex">\(q_\phi(z|x)\)</span>建模为高斯分布 <span class="arithmatex">\(\mathcal{N}(z|\mu,\sigma^2)\)</span>。其中<span class="arithmatex">\(\mu\)</span>与<span class="arithmatex">\(\sigma\)</span>通过encoder对样本 <span class="arithmatex">\(x\)</span> 估计得到，最后计算的是：
+     $$
+     \mathcal{D}_{KL}(\mathcal{N}(z|\mu,\sigma^2)||\mathcal{N}(z|0,\mathbf{I}))
+     $$</p>
+</li>
+</ul>
+<p>我们讨论完了单个样本的情况，那么最终的损失函数应该看成单个样本的损失函数在真实的数据分布上面的期望：
+   $$
+   \mathcal{L}<em p__text_data="p_{\text{data" x_sim="x\sim">{\theta,\phi}=\mathbf{E}</em>}}(x)}[-\mathbf{E<em>{z\sim q</em>\phi(z|x)}\log p_\theta(x|z)+\mathcal{D}<em>{KL}(q</em>\phi(z|x)||p_\theta(z))]
+   $$</p>
+<p>在inference阶段，我们只需要从标准高斯分布<span class="arithmatex">\(\mathcal{N}(0,\mathbf{I})\)</span>里面采样得到<span class="arithmatex">\(z\)</span>，然后通过decoder得到结果。</p>
+<p><img alt="" src="lec2-vae.png" /></p>
+<p>如上图，encoder把数据的分布映射到latent 的分布，decoder则相反。我们用<span class="arithmatex">\(q_\phi(z)\)</span>近似表示<span class="arithmatex">\(p(z)\)</span>：
+$$
+q_\phi(z)=\int_x q_\phi(z|x)p_{\text{data}}(x)dx
+$$</p>
 <h1 id="relation-to-expectation-maximization-em">Relation to Expectation-Maximization (EM)<a class="headerlink" href="#relation-to-expectation-maximization-em" title="Permanent link"></a></h1>
+<p>在VAE的生成器中，有两部分参数：latent 分布的参数 <span class="arithmatex">\(q\)</span> 与 生成器神经网络参数 <span class="arithmatex">\(\theta\)</span>。</p>
+<p>VAE用神经网络建模<span class="arithmatex">\(\theta\)</span>，用stochastic gradient decent更新参数；EM则经常去分析<span class="arithmatex">\(q\)</span>，用坐标下降更新参数。</p>
+<p>我们在VAE中，把ELBO写为：
+$$
+\text{ELBO}=\mathbf{E}<em _text_data="\text{data">{x\sim p</em>}}(x)}[\mathbf{E<em>{z\sim q</em>\phi(z|x)}\log p_\theta(x|z)-\mathcal{D}<em>{KL}(q</em>\phi(z|x)||p_\theta(z))]
+$$
+EM则把这个问题用坐标下降法看成max-max procedure，目标为：
+$$
+\max_{\theta,q}(\text{ELBO}(\theta,q(\cdot)))
+$$
+在E-step，针对<span class="arithmatex">\(q\)</span>进行优化：
+$$
+q<sup _t_="(t)">{(t)}=p_{\theta</sup>(z|x)
+$$
+}<span class="arithmatex">\(q\)</span>可以使用Gaussian Mixtures或者K-means。</p>
+<p>在M-step则对<span class="arithmatex">\(\theta\)</span>进行优化：
+$$
+\theta<sup _t_="(t)">{(t+1)}=\arg\max_{\theta}Q(\theta|\theta</sup>)
+$$
+其中M-step的优化目标函数为：
+$$
+Q(\theta|\theta<sup _t_="(t)">{(t)})=\mathbf{E}<em _text_data="\text{data">{p</em>}}(x)}\mathbf{E<em>{p</em>{\theta</sup>\log p_\theta(x, z)
+$$}}(z|x)</p>
 <h1 id="vector-quantized-vae-vq-vae">Vector Quantized VAE (VQ-VAE)<a class="headerlink" href="#vector-quantized-vae-vq-vae" title="Permanent link"></a></h1>
 <blockquote>
 <p>补充知识：</p>
 <p>KL散度：https://zhuanlan.zhihu.com/p/438129018</p>
+<p>变分推断中的ELBO：https://blog.csdn.net/qy20115549/article/details/93074519</p>
+<p>EM算法：https://blog.csdn.net/v_JULY_v/article/details/81708386；https://blog.csdn.net/jgj123321/article/details/91868854</p>
 </blockquote>
 
 
@@ -1192,7 +1381,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2025-01-04</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2025-01-06</span>
   </span>
 
     
