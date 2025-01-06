@@ -1226,17 +1226,13 @@
 <p>假设真实世界的数据<span class="arithmatex">\(x\)</span>是从latent variable <span class="arithmatex">\(z\)</span>生成的，真实数据<span class="arithmatex">\(x\)</span>服从于一个数据分布<span class="arithmatex">\(p(x)\)</span>，latent variable服从于另一个分布<span class="arithmatex">\(p(z)\)</span>。那么模型需要做的是：学会<span class="arithmatex">\(p(x)\rightarrow p(z)\)</span>这个映射，即<span class="arithmatex">\(p(x|z)\)</span>。</p>
 <p>我们加入deep learning的思想，用一个<strong>参数<span class="arithmatex">\(\theta\)</span>表示神经网络中可学习的参数</strong>，那么问题就变成：生成器模型 <span class="arithmatex">\(p_{\theta(x|z)}\)</span> 如何从<span class="arithmatex">\(p(z)\)</span>这个分布推理出最终的 <span class="arithmatex">\(p_\theta(x)\)</span> 。</p>
 <p>为了衡量预测的结果分布 <span class="arithmatex">\(p_{\theta(x)}\)</span> 的质量（说白了就是构建与真实结果分布 <span class="arithmatex">\(p{_\text{data}(x)}\)</span> 的损失函数），我们引入KL散度，把损失函数先定义为最小化预测的分布和真实分布的距离：<span class="arithmatex">\(\mathcal{L}=\min_{\theta}\mathcal{D}_{KL}(p_{\text{data}}(x)||p_{\theta}(x))\)</span>。</p>
-<!-- 
-$$
-\mathcal{L}=\min_{\theta}\mathcal{D}_{KL}(p_{\text{data}}(x)||p_{\theta}(x))
-$$ -->
-
 <p>然后接下来的过程比较数学：</p>
 <ol>
-<li>先说明 最小化预测的分布和真实分布的距离 等价于 最大化似然函数 <span class="arithmatex">\(\max_{\theta}\mathbf{E}_{x\sim p_{\text{data}}}\log{p_{\theta}}(x)\)</span>。证明过程如下：我们最终需要确定的参数<span class="arithmatex">\(\theta\)</span>的值表示为：
-   $$
-   \theta^{*}=\arg\min_{\theta}\mathcal{D}<em _text_data="\text{data">{KL}(p</em>(x))
-   $$}}(x)||p_{\theta</li>
+<li>先说明<strong>最小化预测的分布和真实分布的距离</strong>等价于<strong>最大化似然函数</strong><span class="arithmatex">\(\max_{\theta}\mathbf{E}_{x\sim p_{\text{data}}}\log{p_{\theta}}(x)\)</span>。证明过程如下：我们最终需要确定的参数<span class="arithmatex">\(\theta\)</span>的值表示为：<span class="arithmatex">\(\theta^{*}=\arg\min_{\theta}\mathcal{D}_{KL}(p_{\text{data}}(x)||p_{\theta}(x))\)</span>。
+   <!-- $$
+   \theta^{*}=\arg\min_{\theta}\mathcal{D}_{KL}(p_{\text{data}}(x)||p_{\theta}(x))
+   $$ -->
+</li>
 </ol>
 <p>根据KL散度的定义，我们可以得到：
    $$
