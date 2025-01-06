@@ -1242,11 +1242,7 @@
    $$
    \theta^{*}=\arg\max_{\theta}\sum_x p_{\text{data}}(x)\log p_{\theta}(x)
    $$</p>
-<p>由期望的定义得：<span class="arithmatex">\(\theta^{*}=\arg\max_{\theta} \mathbf{E}_{x\sim p_{\text{data}}}\log p_{\theta}(x)\)</span>
-   <!-- $$
-   \theta^{*}=\arg\max_{\theta} \mathbf{E}_{x\sim p_{\text{data}}}\log p_{\theta}(x)
-   $$ -->
-</p>
+<p>由期望的定义得：<span class="arithmatex">\(\theta^{*}=\arg\max_{\theta} \mathbf{E}_{x\sim p_{\text{data}}}\log p_{\theta}(x)\)</span></p>
 <ol>
 <li>接下来，我们对<span class="arithmatex">\(\log p_\theta(x)\)</span>进行衡量，<span class="arithmatex">\(p_\theta(x)\)</span>可以根据条件概率公式得到：
    $$
@@ -1265,19 +1261,16 @@
 <p>再玩一个数学游戏，log 函数的指数乘上 <span class="arithmatex">\(\frac{q(z)}{q(z)}\)</span> ，展开得到：
    $$
    \log p_\theta(x)=\int_z q(z)(\log p_\theta(x|z)+\log (\frac{p_\theta(x)}{q(z)})+\log (\frac{q(z)}{p_\theta(z|x)}))dz
-   $$
-   根据期望与散度的定义，分别得到：
-   $$
-   \log p_\theta(x)=\mathbf{E}<em>{z\sim q(z)}\log p</em>\theta(x|z)-\mathcal{D}<em>{KL}(q(z)||p</em>\theta(z))+\mathcal{D}<em>{KL}(q(z)||p</em>\theta(z|x))
    $$</p>
-<p>到这里我们可以发现，原先未知的 <span class="arithmatex">\(\log p_\theta(x)\)</span> 函数的表示中 ，仅有 <span class="arithmatex">\(\mathcal{D}_{KL}(q(z)||p_\theta(z|x))\)</span>  是未知的。</p>
+<p>分别根据期望与散度的定义得到：<span class="arithmatex">\(\log p_\theta(x)=\mathbf{E}_{z\sim q(z)}\log p_\theta(x|z)-\mathcal{D}_{KL}(q(z)||p_\theta(z))+\mathcal{D}_{KL}(q(z)||p_\theta(z|x))\)</span></p>
+<p>到这里我们可以发现，原先未知的 <span class="arithmatex">\(\log p_\theta(x)\)</span> 函数的表示中，仅有 <span class="arithmatex">\(\mathcal{D}_{KL}(q(z)||p_\theta(z|x))\)</span>  是未知的。</p>
 <blockquote>
 <p>这里还得再看看，为啥这个可控，那个不可控</p>
 </blockquote>
 <p>我们把上面的式子进行变形，显然可得：
-   $$
+$$
    \log p_\theta(x)-\mathcal{D}<em>{KL}(q(z)||p</em>\theta(z|x))=\mathbf{E}<em>{z\sim q(z)}\log p</em>\theta(x|z)-\mathcal{D}<em>{KL}(q(z)||p</em>\theta(z))
-   $$
+$$
    式子中左边均为未知的，右边均为已知的。对于任意的分布<span class="arithmatex">\(q(z)\)</span>，由于KL散度具有非负性，我们可以得到 <span class="arithmatex">\(\log p_\theta(x)\)</span> 函数的下界为 <span class="arithmatex">\(\mathbf{E}_{z\sim q(z)}\log p_\theta(x|z)-\mathcal{D}_{KL}(q(z)||p_\theta(z))\)</span>。这就是传说中的 <strong>ELBO</strong> ：
    $$
    \log p_\theta(x)\geq \mathbf{E}<em>{z\sim q(z)}\log p</em>\theta(x|z)-\mathcal{D}<em>{KL}(q(z)||p</em>\theta(z))
@@ -1364,7 +1357,10 @@ $$
 $$</p>
 <h1 id="vector-quantized-vae-vq-vae">Vector Quantized VAE (VQ-VAE)<a class="headerlink" href="#vector-quantized-vae-vq-vae" title="Permanent link"></a></h1>
 <p>和之前的VAE相比最大的不同：之前的VAE的latent variable是连续的，VQ-VAE的<strong>latent variable是离散的</strong>。</p>
-<p>VQ-VAE主要用于建模多模态的分布。</p>
+<p>VQ-VAE主要用于建模多模态的分布。思想和VAE一样，都是最大化ELBO，<strong>重建损失和VAE一样，正则化损失有区别</strong>：因为VQ-VAE中的<span class="arithmatex">\(z\)</span>是离散型变量，VAE中<span class="arithmatex">\(z\)</span>是连续性变量。</p>
+<p>但是有一个问题，我们在离散采样的过程中，如何进行反向传播呢？解：引入codebook，使用K-means的思想。</p>
+<p><img alt="" src="lec2-vqvae.png" /></p>
+<p>如上图所示，VQ-VAE正则化损失可以看成<span class="arithmatex">\(||z_e-z_q||^2\)</span>，即上面所说的K-means的重建损失。</p>
 <blockquote>
 <p>补充知识：</p>
 <p>KL散度：https://zhuanlan.zhihu.com/p/438129018</p>
