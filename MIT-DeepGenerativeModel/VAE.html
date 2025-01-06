@@ -1318,6 +1318,9 @@ $$
      $$
      \mathcal{D}_{KL}(\mathcal{N}(z|\mu,\sigma^2)||\mathcal{N}(z|0,\mathbf{I}))
      $$</p>
+<blockquote>
+<p>反向传播的时候，会从标准正态分布中采样出<span class="arithmatex">\(\epsilon\)</span>，结合encoder得到的<span class="arithmatex">\(\mu\)</span>与<span class="arithmatex">\(\sigma\)</span>，进行<span class="arithmatex">\(z=\mu+\epsilon\sigma\)</span></p>
+</blockquote>
 </li>
 </ul>
 <p>我们讨论完了单个样本的情况，那么最终的损失函数应该看成单个样本的损失函数在真实的数据分布上面的期望：
@@ -1354,7 +1357,19 @@ $$
 $$
 Q(\theta|\theta<sup _t_="(t)">{(t)})=\mathbf{E}<em _text_data="\text{data">{p</em>}}(x)}\mathbf{E<em>{p</em>{\theta</sup>\log p_\theta(x, z)
 $$}}(z|x)</p>
+<h2 id="k-means-autoencoder">K-means AutoEncoder?<a class="headerlink" href="#k-means-autoencoder" title="Permanent link"></a></h2>
+<p>可以用autoencoder的思想来看这个问题：</p>
+<ul>
+<li>encoder：把每个样本<span class="arithmatex">\(x\)</span>编码为独热码</li>
+<li>decoder：把每个独热码解码为新的中心点<span class="arithmatex">\(x'\)</span></li>
+</ul>
+<p>目标函数为：
+$$
+\min\sum_x||x-\text{Decode}(\text{Encode(x)})||^2
+$$</p>
 <h1 id="vector-quantized-vae-vq-vae">Vector Quantized VAE (VQ-VAE)<a class="headerlink" href="#vector-quantized-vae-vq-vae" title="Permanent link"></a></h1>
+<p>和之前的VAE相比最大的不同：之前的VAE的latent variable是连续的，VQ-VAE的<strong>latent variable是离散的</strong>。</p>
+<p>VQ-VAE主要用于建模多模态的分布。</p>
 <blockquote>
 <p>补充知识：</p>
 <p>KL散度：https://zhuanlan.zhihu.com/p/438129018</p>
