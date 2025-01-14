@@ -53,23 +53,19 @@
 
    分别根据期望与散度的定义得到：$\log p_\theta(x)=\mathbf{E}_{z\sim q(z)}\log p_\theta(x|z)-\mathcal{D}_{KL}(q(z)||p_\theta(z))+\mathcal{D}_{KL}(q(z)||p_\theta(z|x))$
 
-   <!-- $$
-   \log p_\theta(x)=\mathbf{E}_{z\sim q(z)}\log p_\theta(x|z)-\mathcal{D}_{KL}(q(z)||p_\theta(z))+\mathcal{D}_{KL}(q(z)||p_\theta(z|x))
-   $$ -->
-
    到这里我们可以发现，原先未知的 $\log p_\theta(x)$ 函数的表示中，仅有 $\mathcal{D}_{KL}(q(z)||p_\theta(z|x))$  是未知的。
-
+   
    > 这里还得再看看，为啥这个可控，那个不可控
 
    我们把上面的式子进行变形，显然可得：
-   $$
+$$
    \log p_\theta(x)-\mathcal{D}_{KL}(q(z)||p_\theta(z|x))=\mathbf{E}_{z\sim q(z)}\log p_\theta(x|z)-\mathcal{D}_{KL}(q(z)||p_\theta(z))
-   $$
+$$
    式子中左边均为未知的，右边均为已知的。对于任意的分布$q(z)$，由于KL散度具有非负性，我们可以得到 $\log p_\theta(x)$ 函数的下界为 $\mathbf{E}_{z\sim q(z)}\log p_\theta(x|z)-\mathcal{D}_{KL}(q(z)||p_\theta(z))$。这就是传说中的 **ELBO** ：
    $$
    \log p_\theta(x)\geq \mathbf{E}_{z\sim q(z)}\log p_\theta(x|z)-\mathcal{D}_{KL}(q(z)||p_\theta(z))
    $$
-
+   
 3. 我们接下来对$q(z)$进行操作：把$q(z)$用$\phi$参数化为$q_\phi(z|x)$，并且令 $p_\theta (z)$ 成为 $p(z)$ 的先验。
 
    > 这里需要理解一下
@@ -161,9 +157,23 @@ $$
 
 和之前的VAE相比最大的不同：之前的VAE的latent variable是连续的，VQ-VAE的**latent variable是离散的**。
 
-VQ-VAE主要用于建模多模态的分布。
+VQ-VAE主要用于建模多模态的分布。思想和VAE一样，都是最大化ELBO，**重建损失和VAE一样，正则化损失有区别**：因为VQ-VAE中的$z$是离散型变量，VAE中$z$是连续性变量。
 
+但是有一个问题，我们在离散采样的过程中，如何进行反向传播呢？解：引入codebook，使用K-means的思想。
 
+![](./lec2-vqvae.png)
+
+如上图所示，VQ-VAE正则化损失可以看成$||z_e-z_q||^2$，即上面所说的K-means的重建损失。
+
+反向传播的时候，用到了“straight-through”的技巧：forward的时候用hardmax的输出，backward的时候利用softmax的梯度。
+
+## VQ-VAE常常被用作tokenizer
+
+使用中VQ-VAE会生成**spatial latents**，常常使用卷积神经网络/transformer作为encoder/decoder。
+
+![](./lec2-vqvae-tokenizer.png)
+
+但是在更加复杂的问题里面，spatial latent不一定是相互独立的，VAE的想法也没有办法处理联合分布的预测问题。$p(z)$只对每个token的分布进行建模，没有对联合分布进行建模。在推理的阶段，我们也没法从独立同分布的$p(z)$中进行采样。
 
 > 补充知识：
 >
